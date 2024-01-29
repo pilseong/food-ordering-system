@@ -22,7 +22,9 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/common/common-controller" />
             <option value="$PROJECT_DIR$/common/common-domain" />
+            <option value="$PROJECT_DIR$/common/common-utils" />
             <option value="$PROJECT_DIR$/infrastructure/kafka/kafka-config-data" />
+            <option value="$PROJECT_DIR$/infrastructure/kafka/kafka-consumer" />
             <option value="$PROJECT_DIR$/infrastructure/kafka/kafka-model" />
             <option value="$PROJECT_DIR$/infrastructure/kafka/kafka-producer" />
             <option value="$PROJECT_DIR$/order-service/order-app" />
@@ -31,6 +33,8 @@
             <option value="$PROJECT_DIR$/order-service/order-domain/order-domain-application-service" />
             <option value="$PROJECT_DIR$/order-service/order-domain/order-domain-core" />
             <option value="$PROJECT_DIR$/order-service/order-messaging" />
+            <option value="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-application-service" />
+            <option value="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core" />
           </set>
         </option>
       </GradleProjectSettings>

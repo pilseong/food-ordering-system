@@ -1,4 +1,4 @@
-package net.philipheur.food_ordering_system.order_service.domain.application_service
+package net.philipheur.food_ordering_system.order_service.domain.application_service.config
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.context.properties.ConfigurationProperties

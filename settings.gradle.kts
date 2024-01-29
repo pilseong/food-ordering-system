@@ -13,6 +13,7 @@ plugins {
 rootProject.name = "food-ordering-system"
 include(":common-domain")
 include(":common-controller")
+include(":common-utils")
 include(":order-domain-core")
 include(":order-domain-application-service")
 include(":order-dataaccess")
@@ -22,12 +23,19 @@ include(":kafka-config-data")
 include(":kafka-model")
 include(":order-messaging")
 include(":kafka-producer")
+include(":kafka-consumer")
+
+include(":payment-domain-core")
+include(":payment-domain-application-service")
+
 
 
 project(":common-domain").projectDir =
     file("common/common-domain")
 project(":common-controller").projectDir =
     file("common/common-controller")
+project(":common-utils").projectDir =
+    file("common/common-utils")
 project(":order-domain-core").projectDir =
     file("order-service/order-domain/order-domain-core")
 project(":order-domain-application-service").projectDir =
@@ -46,3 +54,10 @@ project(":kafka-model").projectDir =
     file("infrastructure/kafka/kafka-model")
 project(":kafka-producer").projectDir =
     file("infrastructure/kafka/kafka-producer")
+project(":kafka-consumer").projectDir =
+    file("infrastructure/kafka/kafka-consumer")
+
+project(":payment-domain-core").projectDir =
+    file("payment-service/payment-domain/payment-domain-core")
+project(":payment-domain-application-service").projectDir =
+    file("payment-service/payment-domain/payment-domain-application-service")

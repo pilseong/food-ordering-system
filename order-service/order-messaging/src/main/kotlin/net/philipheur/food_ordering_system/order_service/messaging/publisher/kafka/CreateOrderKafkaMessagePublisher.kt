@@ -4,7 +4,7 @@ package net.philipheur.food_ordering_system.order_service.messaging.publisher.ka
 import net.philipheur.food_ordering_system.infrastructure.kafka.model.avro.order.PaymentOrderStatus
 import net.philipheur.food_ordering_system.infrastructure.kafka.model.avro.order.PaymentRequestAvroModel
 import net.philipheur.food_ordering_system.infrastructure.kafka.producer.service.KafkaProducer
-import net.philipheur.food_ordering_system.order_service.domain.application_service.OrderServiceConfigData
+import net.philipheur.food_ordering_system.order_service.domain.application_service.config.OrderServiceConfigData
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
 import net.philipheur.food_ordering_system.order_service.domain.core.event.OrderCreatedEvent
 import org.slf4j.LoggerFactory
@@ -13,6 +13,7 @@ import java.util.*
 
 inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
 
+/* domain 레이어에서 사용할 publisher 의 기능을 실제 구현하는 구현체 클래스 */
 @Component
 open class CreateOrderKafkaMessagePublisher(
     private val orderServiceConfigData: OrderServiceConfigData,

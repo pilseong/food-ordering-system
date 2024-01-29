@@ -11,7 +11,5 @@ class OrderNotFoundException : DomainException {
     constructor(
         message: String,
         cause: Throwable
-    ) : super(
-        message, cause
-    )
+    ) : super(message, cause)
 }
