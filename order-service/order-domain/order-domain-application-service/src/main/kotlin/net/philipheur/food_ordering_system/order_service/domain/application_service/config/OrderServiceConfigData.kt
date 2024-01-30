@@ -2,13 +2,13 @@ package net.philipheur.food_ordering_system.order_service.domain.application_ser
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.bind.ConstructorBinding
 import org.springframework.context.annotation.Configuration
 
-@Configuration
 @ConfigurationProperties(prefix = "order-service")
-open class OrderServiceConfigData(
-    var paymentRequestTopicName: String? = null,
-    var paymentResponseTopicName: String? = null,
-    var restaurantApprovalRequestTopicName: String? = null,
-    var restaurantApprovalResponseTopicName: String? = null
+data class OrderServiceConfigData @ConstructorBinding constructor(
+    var paymentRequestTopicName: String,
+    var paymentResponseTopicName: String,
+    var restaurantApprovalRequestTopicName: String,
+    var restaurantApprovalResponseTopicName: String
 )

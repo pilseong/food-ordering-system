@@ -2,14 +2,28 @@ package net.philipheur.food_ordering_system.order_service
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.web.server.adapter.WebHttpHandlerBuilder.applicationContext
 
-@EnableJpaRepositories(basePackages = ["net.philipheur.food_ordering_system.order_service.dataaccess"])
-@EntityScan(basePackages = ["net.philipheur.food_ordering_system.order_service.dataaccess"])
+@EnableJpaRepositories(
+    basePackages = [
+        "net.philipheur.food_ordering_system.order_service.dataaccess"
+    ]
+)
+@EntityScan(
+    basePackages = [
+        "net.philipheur.food_ordering_system.order_service.dataaccess"
+    ]
+)
 @SpringBootApplication(
     scanBasePackages = [
+        "net.philipheur.food_ordering_system"
+    ]
+)
+@ConfigurationPropertiesScan(
+    basePackages = [
         "net.philipheur.food_ordering_system"
     ]
 )

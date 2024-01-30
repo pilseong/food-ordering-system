@@ -6,12 +6,12 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding
 import org.springframework.context.annotation.Configuration
 
 
-@Configuration
 @ConfigurationProperties(prefix = "kafka-config")
-open class KafkaConfigData(
-    var bootstrapServers: String? = null,
-    var schemaRegistryUrlKey: String? = null,
-    var schemaRegistryUrl: String? = null,
-    var numOfPartitions: Int? = null,
-    var replicationFactor: Int? = null
+data class KafkaConfigData
+@ConstructorBinding constructor(
+    var bootstrapServers: String,
+    var schemaRegistryUrlKey: String,
+    var schemaRegistryUrl: String,
+    var numOfPartitions: Int,
+    var replicationFactor: Int
 )

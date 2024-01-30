@@ -58,7 +58,7 @@ open class CreateOrderKafkaMessagePublisher(
                     log.error(
                         "Error while sending message {} to topic {}",
                         paymentRequestAvroModel.toString(),
-                        orderServiceConfigData.paymentResponseTopicName,
+                        orderServiceConfigData.paymentRequestTopicName,
                         ex
                     );
                 }

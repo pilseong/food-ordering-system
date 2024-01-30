@@ -8,6 +8,10 @@ import net.philipheur.food_ordering_system.order_service.domain.application_serv
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.message.PaymentResponseMessageListener
 import net.philipheur.food_ordering_system.order_service.messaging.publisher.kafka.logger
 import org.slf4j.LoggerFactory
+import org.springframework.kafka.annotation.KafkaListener
+import org.springframework.kafka.support.KafkaHeaders
+import org.springframework.messaging.handler.annotation.Header
+import org.springframework.messaging.handler.annotation.Payload
 import org.springframework.stereotype.Component
 
 inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
@@ -20,11 +24,16 @@ class PaymentResponseKafkaListener(
 ) : KafkaConsumer<PaymentResponseAvroModel> {
 
     private val log = logger()
+
+    @KafkaListener(
+        id = "\${kafka-consumer-config.payment-consumer-group-id}",
+        topics = ["\${order-service.payment-response-topic-name}"]
+    )
     override fun receive(
-        models: List<PaymentResponseAvroModel>,
-        keys: List<String>,
-        partitions: List<Int>,
-        offsets: List<Long>
+        @Payload models: List<PaymentResponseAvroModel>,
+        @Header(KafkaHeaders.RECEIVED_KEY) keys: List<String>,
+        @Header(KafkaHeaders.RECEIVED_PARTITION) partitions: List<Int>,
+        @Header(KafkaHeaders.OFFSET) offsets: List<Long>
     ) {
         log.info(
             "${models.size} number of payment responses received with " +

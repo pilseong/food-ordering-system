@@ -1,11 +1,11 @@
 package net.philipheur.food_ordering_system.infrastructure.kafka.config_data
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.bind.ConstructorBinding
 
-@EnableAutoConfiguration
 @ConfigurationProperties(prefix = "kafka-consumer-config")
-data class KafkaConsumerConfigData(
+data class KafkaConsumerConfigData
+@ConstructorBinding constructor(
     val keyDeserializer: String,
     val valueDeserializer: String,
     val autoOffsetReset: String,
