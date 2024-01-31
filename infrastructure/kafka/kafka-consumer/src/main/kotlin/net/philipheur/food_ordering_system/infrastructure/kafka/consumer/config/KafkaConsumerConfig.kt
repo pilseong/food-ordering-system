@@ -24,11 +24,11 @@ open class KafkaConsumerConfig<ID : Serializable, MSG : SpecificRecordBase>(
     open fun consumerConfigs(): Map<String, Any> {
         val props: Map<String, Any> =
             mapOf(
-                BOOTSTRAP_SERVERS_CONFIG to kafkaConfigData.bootstrapServers!!,
+                BOOTSTRAP_SERVERS_CONFIG to kafkaConfigData.bootstrapServers,
                 KEY_DESERIALIZER_CLASS_CONFIG to kafkaConsumerConfigData.keyDeserializer,
                 VALUE_DESERIALIZER_CLASS_CONFIG to kafkaConsumerConfigData.valueDeserializer,
                 AUTO_OFFSET_RESET_CONFIG to kafkaConsumerConfigData.autoOffsetReset,
-                kafkaConfigData.schemaRegistryUrlKey!! to kafkaConfigData.schemaRegistryUrl!!,
+                kafkaConfigData.schemaRegistryUrlKey to kafkaConfigData.schemaRegistryUrl,
                 kafkaConsumerConfigData.specificAvroReaderKey to kafkaConsumerConfigData.specificAvroReader,
                 SESSION_TIMEOUT_MS_CONFIG to kafkaConsumerConfigData.sessionTimeoutMs,
                 HEARTBEAT_INTERVAL_MS_CONFIG to kafkaConsumerConfigData.heartbeatIntervalMs,

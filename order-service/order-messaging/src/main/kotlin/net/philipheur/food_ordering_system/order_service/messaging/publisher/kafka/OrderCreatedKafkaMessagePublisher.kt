@@ -1,17 +1,15 @@
 package net.philipheur.food_ordering_system.order_service.messaging.publisher.kafka
 
 
+import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.infrastructure.kafka.model.avro.order.PaymentOrderStatus
 import net.philipheur.food_ordering_system.infrastructure.kafka.model.avro.order.PaymentRequestAvroModel
 import net.philipheur.food_ordering_system.infrastructure.kafka.producer.service.KafkaProducer
 import net.philipheur.food_ordering_system.order_service.domain.application_service.config.OrderServiceConfigData
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
 import net.philipheur.food_ordering_system.order_service.domain.core.event.OrderCreatedEvent
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.util.*
-
-inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
 
 /* domain 레이어에서 사용할 publisher 의 기능을 실제 구현하는 구현체 클래스 */
 @Component
@@ -20,7 +18,7 @@ open class CreateOrderKafkaMessagePublisher(
     private val kafkaProducer: KafkaProducer<String, PaymentRequestAvroModel>
 ) : OrderCreatedPaymentRequestMessagePublisher {
 
-    private val log = logger()
+    private val log by LoggerDelegator()
 
     override fun publish(domainEvent: OrderCreatedEvent) {
 
@@ -40,14 +38,15 @@ open class CreateOrderKafkaMessagePublisher(
             )
 
             kafkaProducer.send(
-                orderServiceConfigData.paymentRequestTopicName!!,
-                orderId,
-                paymentRequestAvroModel
+                topicName = orderServiceConfigData.paymentRequestTopicName,
+                key = orderId,
+                message = paymentRequestAvroModel
             ) { result, ex ->
                 if (ex == null) {
                     val metadata = result!!.recordMetadata;
                     log.info(
-                        "Received new metadata. " +
+                        "Received successful response from Kafka for " +
+                                "order id: $orderId " +
                                 "Topic: ${metadata.topic()}; " +
                                 "Partition: ${metadata.partition()}; " +
                                 "Offset: ${metadata.offset()}; " +
@@ -56,9 +55,9 @@ open class CreateOrderKafkaMessagePublisher(
                     )
                 } else {
                     log.error(
-                        "Error while sending message {} to topic {}",
-                        paymentRequestAvroModel.toString(),
-                        orderServiceConfigData.paymentRequestTopicName,
+                        "Error while sending " +
+                                "message $paymentRequestAvroModel " +
+                                "to topic ${orderServiceConfigData.paymentRequestTopicName}",
                         ex
                     );
                 }

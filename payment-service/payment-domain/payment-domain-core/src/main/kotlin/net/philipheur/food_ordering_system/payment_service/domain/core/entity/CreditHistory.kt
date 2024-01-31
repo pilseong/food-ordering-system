@@ -7,9 +7,9 @@ import net.philipheur.food_ordering_system.common.domain.valueobject.Money
 import net.philipheur.food_ordering_system.payment_service.domain.core.valueobject.TransactionType
 
 class CreditHistory(
-    id: CreditHistoryId?,
+    creditHistoryId: CreditHistoryId?,
     val customerId: CustomerId,
     var amount: Money,
     var transactionType: TransactionType? = null
-): BaseEntity<CreditHistoryId>(id) {
+): BaseEntity<CreditHistoryId>(creditHistoryId) {
 }

@@ -1,5 +1,6 @@
 package net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.service.impl
 
+import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderCommand
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderResponseDto
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.track.TrackOrderCommand
@@ -8,12 +9,8 @@ import net.philipheur.food_ordering_system.order_service.domain.application_serv
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.TrackOrderHelper
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.service.`interface`.OrderApplicationService
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
-import net.philipheur.food_ordering_system.order_service.domain.core.logger
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import java.util.*
 
-inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
 
 @Service
 class OrderApplicationServiceImpl(
@@ -23,7 +20,7 @@ class OrderApplicationServiceImpl(
     OrderCreatedPaymentRequestMessagePublisher,
 ) : OrderApplicationService {
 
-    private val log = logger()
+    private val log by LoggerDelegator()
 
     override fun createOrder(
         command: CreateOrderCommand,

@@ -33,8 +33,11 @@
             <option value="$PROJECT_DIR$/order-service/order-domain/order-domain-application-service" />
             <option value="$PROJECT_DIR$/order-service/order-domain/order-domain-core" />
             <option value="$PROJECT_DIR$/order-service/order-messaging" />
+            <option value="$PROJECT_DIR$/payment-service/payment-app" />
+            <option value="$PROJECT_DIR$/payment-service/payment-dataaccess" />
             <option value="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-application-service" />
             <option value="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core" />
+            <option value="$PROJECT_DIR$/payment-service/payment-messaging" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,21 +1,17 @@
 package net.philipheur.food_ordering_system.order_service.messaging.listener
 
+import net.philipheur.food_ordering_system.common.domain.valueobject.PaymentStatus
+import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.infrastructure.kafka.consumer.KafkaConsumer
 import net.philipheur.food_ordering_system.infrastructure.kafka.model.avro.order.PaymentResponseAvroModel
-import net.philipheur.food_ordering_system.infrastructure.kafka.model.avro.order.PaymentStatus
-import net.philipheur.food_ordering_system.infrastructure.kafka.model.avro.order.PaymentStatus.COMPLETED
+import net.philipheur.food_ordering_system.infrastructure.kafka.model.avro.order.PaymentStatus.*
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.message.PaymentResponse
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.message.PaymentResponseMessageListener
-import net.philipheur.food_ordering_system.order_service.messaging.publisher.kafka.logger
-import org.slf4j.LoggerFactory
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.KafkaHeaders
 import org.springframework.messaging.handler.annotation.Header
 import org.springframework.messaging.handler.annotation.Payload
 import org.springframework.stereotype.Component
-
-inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
-
 
 // 카프카에서 수신한 메시지를 domain 에서 정의한 Listener 인터페이스로 호출해 준다.
 @Component
@@ -23,7 +19,7 @@ class PaymentResponseKafkaListener(
     private val paymentResponseMessageListener: PaymentResponseMessageListener,
 ) : KafkaConsumer<PaymentResponseAvroModel> {
 
-    private val log = logger()
+    private val log by LoggerDelegator()
 
     @KafkaListener(
         id = "\${kafka-consumer-config.payment-consumer-group-id}",
@@ -50,8 +46,8 @@ class PaymentResponseKafkaListener(
                     modelToMessage(model)
                 )
             } else if (
-                model.paymentStatus == PaymentStatus.CANCELLED ||
-                model.paymentStatus == PaymentStatus.FAILED
+                model.paymentStatus == CANCELLED ||
+                model.paymentStatus == FAILED
             ) {
                 log.info("Processing unsuccessful payment for order id: ${model.orderId}", )
                 paymentResponseMessageListener.paymentCancelled(
@@ -71,7 +67,7 @@ class PaymentResponseKafkaListener(
             price = msg.price,
             createdAt = msg.createdAt,
             paymentStatus =
-            net.philipheur.food_ordering_system.common.domain.valueobject.PaymentStatus
+            PaymentStatus
                 .valueOf(msg.paymentStatus.name),
             failureMessages = msg.failureMessages,
         )

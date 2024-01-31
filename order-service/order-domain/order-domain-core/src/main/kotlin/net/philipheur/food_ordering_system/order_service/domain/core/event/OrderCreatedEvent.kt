@@ -8,4 +8,7 @@ class OrderCreatedEvent(
     order: Order,
     createdAt: ZonedDateTime
 ) : OrderEvent(order, createdAt) {
+    override fun fire() {
+        TODO("Not yet implemented")
+    }
 }

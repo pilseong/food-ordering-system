@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":common-utils"))
     api(project(":order-domain-application-service"))
     api(project(":kafka-model"))
     api(project(":kafka-producer"))

@@ -21,18 +21,8 @@ open class OrderRepositoryImpl(
         return mapper.orderEntityToOrder(orderEntity)
     }
 
-    override fun findByTrackingId(trackingId: TrackingId): Order? {
-        val orderEntity = orderJpaRepository
+    override fun findByTrackingId(trackingId: TrackingId) =
+        orderJpaRepository
             .findByTrackingId(trackingId.value)
-
-        if (orderEntity == null) {
-            throw OrderNotFoundException(
-                "cannot find order by tracking id : $trackingId"
-            )
-        }
-
-        return mapper.orderEntityToOrder(orderEntity)
-    }
-
-
+            ?.let { mapper.orderEntityToOrder(it) }
 }

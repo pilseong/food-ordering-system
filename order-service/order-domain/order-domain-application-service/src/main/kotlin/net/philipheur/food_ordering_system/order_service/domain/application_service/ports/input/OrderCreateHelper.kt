@@ -1,5 +1,6 @@
 package net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input
 
+import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderCommand
 import net.philipheur.food_ordering_system.order_service.domain.application_service.mapper.OrderTypeMapper
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.CustomerRepository
@@ -11,13 +12,10 @@ import net.philipheur.food_ordering_system.order_service.domain.core.entity.Orde
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Restaurant
 import net.philipheur.food_ordering_system.order_service.domain.core.event.OrderCreatedEvent
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
-import net.philipheur.food_ordering_system.order_service.domain.core.logger
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
-inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
 
 @Component
 open class OrderCreateHelper(
@@ -28,7 +26,7 @@ open class OrderCreateHelper(
     private val orderDomainService: OrderDomainService,
 ) {
 
-    private val log = logger()
+    private val log by LoggerDelegator()
 
     // 주문을 저장하고 이벤트 객체에 넣어서 반환
 

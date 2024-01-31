@@ -1,18 +1,15 @@
 package net.philipheur.food_ordering_system.payment_service.domain.core.entity
 
 import net.philipheur.food_ordering_system.common.domain.entity.AggregateRoot
-import net.philipheur.food_ordering_system.common.domain.valueobject.CustomerId
+import net.philipheur.food_ordering_system.common.domain.valueobject.*
 import net.philipheur.food_ordering_system.common.domain.valueobject.DomainConstant.Companion.UTC
-import net.philipheur.food_ordering_system.common.domain.valueobject.Money
-import net.philipheur.food_ordering_system.common.domain.valueobject.PaymentId
-import net.philipheur.food_ordering_system.common.domain.valueobject.PaymentStatus
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.*
 
 class Payment(
     paymentId: PaymentId? = null,
-    var orderId: PaymentId,
+    var orderId: OrderId,
     var customerId: CustomerId,
     var price: Money,
     var paymentStatus: PaymentStatus? = null,

@@ -24,34 +24,34 @@ open class KafkaProducerConfig<K : Serializable?, V : SpecificRecordBase?>(
         val props = mutableMapOf<String,Any>()
 
         props[ProducerConfig.BOOTSTRAP_SERVERS_CONFIG] =
-            kafkaConfigData.bootstrapServers!!
+            kafkaConfigData.bootstrapServers
 
-        props[kafkaConfigData.schemaRegistryUrlKey!!] =
-            kafkaConfigData.schemaRegistryUrl!!
+        props[kafkaConfigData.schemaRegistryUrlKey] =
+            kafkaConfigData.schemaRegistryUrl
 
         props[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] =
-            kafkaProducerConfigData.keySerializerClass!!
+            kafkaProducerConfigData.keySerializerClass
 
         props[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] =
-            kafkaProducerConfigData.valueSerializerClass!!
+            kafkaProducerConfigData.valueSerializerClass
 
         props[ProducerConfig.BATCH_SIZE_CONFIG] =
-            kafkaProducerConfigData.batchSize!! * kafkaProducerConfigData.batchSizeBoostFactor!!
+            kafkaProducerConfigData.batchSize * kafkaProducerConfigData.batchSizeBoostFactor
 
         props[ProducerConfig.LINGER_MS_CONFIG] =
-            kafkaProducerConfigData.lingerMs!!
+            kafkaProducerConfigData.lingerMs
 
         props[ProducerConfig.COMPRESSION_TYPE_CONFIG] =
-            kafkaProducerConfigData.compressionType!!
+            kafkaProducerConfigData.compressionType
 
         props[ProducerConfig.ACKS_CONFIG] =
-            kafkaProducerConfigData.acks!!
+            kafkaProducerConfigData.acks
 
         props[ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG] =
-            kafkaProducerConfigData.requestTimeoutMs!!
+            kafkaProducerConfigData.requestTimeoutMs
 
         props[ProducerConfig.RETRIES_CONFIG] =
-            kafkaProducerConfigData.retryCount!!
+            kafkaProducerConfigData.retryCount
 
         return props
     }

@@ -6,10 +6,10 @@ import net.philipheur.food_ordering_system.common.domain.valueobject.CustomerId
 import net.philipheur.food_ordering_system.common.domain.valueobject.Money
 
 class CreditEntry(
-    id: CreditEntryId,
+    creditEntryId: CreditEntryId,
     val customerId: CustomerId,
     var totalCreditAmount: Money
-) : BaseEntity<CreditEntryId>(id) {
+) : BaseEntity<CreditEntryId>(creditEntryId) {
 
     fun addCreditAmount(amount: Money) {
         totalCreditAmount = totalCreditAmount.add(amount)

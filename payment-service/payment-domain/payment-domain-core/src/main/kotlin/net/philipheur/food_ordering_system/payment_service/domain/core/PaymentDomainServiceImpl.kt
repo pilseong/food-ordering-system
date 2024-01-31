@@ -1,3 +1,6 @@
+package net.philipheur.food_ordering_system.payment_service.domain.core
+
+import net.philipheur.food_ordering_system.common.domain.event.publisher.DomainEventPublisher
 import net.philipheur.food_ordering_system.common.domain.valueobject.CreditHistoryId
 import net.philipheur.food_ordering_system.common.domain.valueobject.DomainConstant.Companion.UTC
 import net.philipheur.food_ordering_system.common.domain.valueobject.PaymentStatus
@@ -7,6 +10,7 @@ import net.philipheur.food_ordering_system.payment_service.domain.core.entity.Cr
 import net.philipheur.food_ordering_system.payment_service.domain.core.entity.Payment
 import net.philipheur.food_ordering_system.payment_service.domain.core.event.PaymentCancelledEvent
 import net.philipheur.food_ordering_system.payment_service.domain.core.event.PaymentCompletedEvent
+import net.philipheur.food_ordering_system.payment_service.domain.core.event.PaymentEvent
 import net.philipheur.food_ordering_system.payment_service.domain.core.event.PaymentFailedEvent
 import net.philipheur.food_ordering_system.payment_service.domain.core.valueobject.TransactionType
 import java.time.ZoneId
@@ -19,8 +23,10 @@ class PaymentDomainServiceImpl : PaymentDomainService {
         payment: Payment,
         creditEntry: CreditEntry,
         creditHistories: MutableList<CreditHistory>,
-        failureMessages: MutableList<String>
-    ) {
+        failureMessages: MutableList<String>,
+        paymentCompletedMessagePublisher: DomainEventPublisher<PaymentCompletedEvent>,
+        paymentFailedMessagePublisher: DomainEventPublisher<PaymentFailedEvent>
+    ): PaymentEvent {
         // 가격이 0보디 큰지 확인
         payment.validatePayment(failureMessages)
 
@@ -40,20 +46,24 @@ class PaymentDomainServiceImpl : PaymentDomainService {
         validateCreditHistory(creditEntry, creditHistories, failureMessages)
 
         if (failureMessages.isEmpty()) {
-            log.info("Payment is initiated for order id: ${payment.orderId.value}")
+            log.info("Payment is initiated successfully for order id: ${payment.orderId.value}")
             payment.updateState(PaymentStatus.COMPLETED)
-            PaymentCompletedEvent(
+            return PaymentCompletedEvent(
                 payment = payment,
                 createdAt = ZonedDateTime.now(ZoneId.of(UTC)),
-                failureMessages = failureMessages
+                failureMessages = failureMessages,
+                paymentCompletedEventPublisher = paymentCompletedMessagePublisher
             )
         } else {
             log.info("Payment initiation has failed for order id: ${payment.orderId.value}")
             payment.updateState(PaymentStatus.FAILED)
-            PaymentFailedEvent(
+
+            return PaymentFailedEvent(
                 payment = payment,
                 createdAt = ZonedDateTime.now(ZoneId.of(UTC)),
-                failureMessages = failureMessages
+                failureMessages = failureMessages,
+                paymentFailedEventPublisher = paymentFailedMessagePublisher
+
             )
         }
     }
@@ -62,8 +72,11 @@ class PaymentDomainServiceImpl : PaymentDomainService {
         payment: Payment,
         creditEntry: CreditEntry,
         creditHistories: MutableList<CreditHistory>,
-        failureMessages: MutableList<String>
-    ) {
+        failureMessages: MutableList<String>,
+        paymentCancelledMessagePublisher: DomainEventPublisher<PaymentCancelledEvent>,
+        paymentFailedMessagePublisher: DomainEventPublisher<PaymentFailedEvent>
+    ): PaymentEvent {
+
         payment.validatePayment(failureMessages)
 
         creditEntry.addCreditAmount(payment.price)
@@ -73,17 +86,19 @@ class PaymentDomainServiceImpl : PaymentDomainService {
         if (failureMessages.isEmpty()) {
             log.info("Payment is cancelled for order id: ${payment.orderId.value}")
             payment.updateState(PaymentStatus.CANCELLED)
-            PaymentCancelledEvent(
+            return PaymentCancelledEvent(
                 payment = payment,
-                createdAt = ZonedDateTime.now(ZoneId.of(UTC))
+                createdAt = ZonedDateTime.now(ZoneId.of(UTC)),
+                paymentCancelledPublisher = paymentCancelledMessagePublisher
             )
         } else {
             log.info("Payment cancellation has failed for order id: ${payment.orderId.value}")
             payment.updateState(PaymentStatus.FAILED)
-            PaymentFailedEvent(
+            return PaymentFailedEvent(
                 payment = payment,
                 createdAt = ZonedDateTime.now(ZoneId.of(UTC)),
-                failureMessages = failureMessages
+                failureMessages = failureMessages,
+                paymentFailedEventPublisher = paymentFailedMessagePublisher
             )
         }
     }
@@ -137,7 +152,7 @@ class PaymentDomainServiceImpl : PaymentDomainService {
 
         creditHistories.add(
             CreditHistory(
-                id = CreditHistoryId(UUID.randomUUID()),
+                creditHistoryId = CreditHistoryId(UUID.randomUUID()),
                 customerId = payment.customerId,
                 amount = payment.price,
                 transactionType = transactionType

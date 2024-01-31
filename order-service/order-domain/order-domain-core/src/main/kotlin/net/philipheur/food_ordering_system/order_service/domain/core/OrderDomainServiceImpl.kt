@@ -1,19 +1,17 @@
 package net.philipheur.food_ordering_system.order_service.domain.core
 
 import net.philipheur.food_ordering_system.common.domain.valueobject.DomainConstant.Companion.UTC
+import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Order
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Restaurant
 import net.philipheur.food_ordering_system.order_service.domain.core.event.OrderCreatedEvent
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
-import org.slf4j.LoggerFactory
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
-inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
-
 
 class OrderDomainServiceImpl : OrderDomainService {
-    private val log = logger()
+    private val log by LoggerDelegator()
 
     // 주문 제품의 정보는 productId만 설정되어 있다.
     override fun validateAndInitializeOrder(

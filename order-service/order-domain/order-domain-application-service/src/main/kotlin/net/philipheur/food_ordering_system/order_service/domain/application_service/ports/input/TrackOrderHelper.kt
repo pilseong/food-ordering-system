@@ -1,10 +1,10 @@
 package net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input
 
+import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.track.TrackOrderCommand
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.OrderRepository
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Order
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderNotFoundException
-import net.philipheur.food_ordering_system.order_service.domain.core.logger
 import net.philipheur.food_ordering_system.order_service.domain.core.valueobject.TrackingId
 
 import org.springframework.stereotype.Component
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 open class TrackOrderHelper(
     private val orderRepository: OrderRepository
 ) {
-    private val log = logger()
+    private val log by LoggerDelegator()
 
     @Transactional
     fun trackOrder(command: TrackOrderCommand): Order   {

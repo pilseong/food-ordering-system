@@ -14,20 +14,24 @@ rootProject.name = "food-ordering-system"
 include(":common-domain")
 include(":common-controller")
 include(":common-utils")
+
 include(":order-domain-core")
 include(":order-domain-application-service")
 include(":order-dataaccess")
 include(":order-controller")
+include(":order-messaging")
 include(":order-app")
+
 include(":kafka-config-data")
 include(":kafka-model")
-include(":order-messaging")
 include(":kafka-producer")
 include(":kafka-consumer")
 
 include(":payment-domain-core")
 include(":payment-domain-application-service")
-
+include(":payment-dataaccess")
+include(":payment-messaging")
+include(":payment-app")
 
 
 project(":common-domain").projectDir =
@@ -36,6 +40,7 @@ project(":common-controller").projectDir =
     file("common/common-controller")
 project(":common-utils").projectDir =
     file("common/common-utils")
+
 project(":order-domain-core").projectDir =
     file("order-service/order-domain/order-domain-core")
 project(":order-domain-application-service").projectDir =
@@ -48,6 +53,7 @@ project(":order-messaging").projectDir =
     file("order-service/order-messaging")
 project(":order-app").projectDir =
     file("order-service/order-app")
+
 project(":kafka-config-data").projectDir =
     file("infrastructure/kafka/kafka-config-data")
 project(":kafka-model").projectDir =
@@ -61,3 +67,9 @@ project(":payment-domain-core").projectDir =
     file("payment-service/payment-domain/payment-domain-core")
 project(":payment-domain-application-service").projectDir =
     file("payment-service/payment-domain/payment-domain-application-service")
+project(":payment-dataaccess").projectDir =
+    file("payment-service/payment-dataaccess")
+project(":payment-messaging").projectDir =
+    file("payment-service/payment-messaging")
+project(":payment-app").projectDir =
+    file("payment-service/payment-app")
