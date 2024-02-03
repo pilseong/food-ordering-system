@@ -15,6 +15,8 @@ include(":common-domain")
 include(":common-controller")
 include(":common-utils")
 
+include(":customer-service")
+
 include(":order-domain-core")
 include(":order-domain-application-service")
 include(":order-dataaccess")
@@ -33,6 +35,11 @@ include(":payment-dataaccess")
 include(":payment-messaging")
 include(":payment-app")
 
+include(":saga")
+
+include(":outbox")
+
+
 
 project(":common-domain").projectDir =
     file("common/common-domain")
@@ -40,6 +47,9 @@ project(":common-controller").projectDir =
     file("common/common-controller")
 project(":common-utils").projectDir =
     file("common/common-utils")
+
+project(":customer-service").projectDir =
+    file("customer-service")
 
 project(":order-domain-core").projectDir =
     file("order-service/order-domain/order-domain-core")
@@ -73,3 +83,9 @@ project(":payment-messaging").projectDir =
     file("payment-service/payment-messaging")
 project(":payment-app").projectDir =
     file("payment-service/payment-app")
+
+project(":saga").projectDir =
+    file("infrastructure/saga")
+
+project(":outbox").projectDir =
+    file("infrastructure/outbox")

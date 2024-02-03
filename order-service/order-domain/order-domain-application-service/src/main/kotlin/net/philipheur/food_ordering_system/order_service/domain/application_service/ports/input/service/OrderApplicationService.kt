@@ -1,4 +1,4 @@
-package net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.service.`interface`
+package net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.service
 
 import jakarta.validation.Valid
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderCommand

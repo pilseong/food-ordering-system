@@ -5,4 +5,4 @@ import net.philipheur.food_ordering_system.order_service.domain.core.event.Order
 
 
 interface OrderCreatedPaymentRequestMessagePublisher :
-        DomainEventPublisher<OrderCreatedEvent>
+    DomainEventPublisher<OrderCreatedEvent>

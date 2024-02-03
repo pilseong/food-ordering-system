@@ -42,7 +42,7 @@ class OrderDataAccessMapper {
             trackingId = TrackingId(orderEntity.trackingId),
             orderStatus = orderEntity.orderStatus,
             failureMessage = orderEntity.failureMessages
-                .split(",")
+                .split(",").toMutableList()
         )
 
     fun orderToOrderEntity(order: Order): OrderEntity {

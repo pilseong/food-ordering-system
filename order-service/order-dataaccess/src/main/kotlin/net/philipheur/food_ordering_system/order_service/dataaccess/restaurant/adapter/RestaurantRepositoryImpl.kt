@@ -17,22 +17,22 @@ open class RestaurantRepositoryImpl(
 
         val productIds = restaurant.products.map { it.id!!.value }
 
-        val restaurantEntity =
+        val restaurantEntities =
             restaurantJpaRepository.findByRestaurantIdAndProductIdIn(
                 restaurantId = restaurant.id!!.value,
                 productIds = productIds
             )
 
         return Restaurant(
-            restaurantId = RestaurantId(restaurantEntity[0].restaurantId),
-            products = restaurantEntity.map {
+            restaurantId = RestaurantId(restaurantEntities[0].restaurantId),
+            products = restaurantEntities.map {
                 Product(
                     productId = ProductId(it.productId),
-                    name = it.restaurantName,
+                    name = it.productName,
                     price = Money(it.productPrice)
                 )
             },
-            active = restaurantEntity[0].restaurantActive
+            active = restaurantEntities[0].restaurantActive
         )
     }
 }

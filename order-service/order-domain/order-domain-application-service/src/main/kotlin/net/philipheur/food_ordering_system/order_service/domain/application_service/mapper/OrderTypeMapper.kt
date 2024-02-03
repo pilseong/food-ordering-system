@@ -1,8 +1,10 @@
 package net.philipheur.food_ordering_system.order_service.domain.application_service.mapper
 
-import net.philipheur.food_ordering_system.common.domain.valueobject.*
+import net.philipheur.food_ordering_system.common.domain.valueobject.CustomerId
+import net.philipheur.food_ordering_system.common.domain.valueobject.Money
+import net.philipheur.food_ordering_system.common.domain.valueobject.ProductId
+import net.philipheur.food_ordering_system.common.domain.valueobject.RestaurantId
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderCommand
-import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderResponseDto
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Order
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.OrderItem
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Product
@@ -26,7 +28,7 @@ open class OrderTypeMapper {
     )
 
     // OrderItem 의 orderId와 id는 null 로 설정된다.
-    fun crateOrderCommandToOrder(
+    fun createOrderCommandToOrder(
         command: CreateOrderCommand
     ) = Order(
         restaurantId = RestaurantId(command.restaurantId),

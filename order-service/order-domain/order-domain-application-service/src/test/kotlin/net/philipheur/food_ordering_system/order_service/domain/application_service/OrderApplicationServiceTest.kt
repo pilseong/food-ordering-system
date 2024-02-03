@@ -5,8 +5,7 @@ import net.philipheur.food_ordering_system.order_service.domain.application_serv
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.DeliveryAddressDto
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.OrderItemDto
 import net.philipheur.food_ordering_system.order_service.domain.application_service.mapper.OrderTypeMapper
-import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.service.`interface`.OrderApplicationService
-import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
+import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.service.OrderApplicationService
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.CustomerRepository
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.OrderRepository
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.RestaurantRepository
@@ -159,7 +158,7 @@ class OrderApplicationServiceTest {
         )
 
         val order = orderTypeMapper!!
-            .crateOrderCommandToOrder(createOrderCommand!!)
+            .createOrderCommandToOrder(createOrderCommand!!)
         order.id = OrderId(ORDER_ID)
 
         Mockito.`when`(customerRepository!!.findCustomer(CUSTOMER_ID))

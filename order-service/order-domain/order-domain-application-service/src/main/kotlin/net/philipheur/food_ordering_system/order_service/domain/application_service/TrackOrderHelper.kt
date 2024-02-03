@@ -1,4 +1,4 @@
-package net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input
+package net.philipheur.food_ordering_system.order_service.domain.application_service
 
 import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.track.TrackOrderCommand

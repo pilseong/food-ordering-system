@@ -3,8 +3,8 @@ package net.philipheur.food_ordering_system.order_service.domain.core.entity
 import net.philipheur.food_ordering_system.common.domain.entity.AggregateRoot
 import net.philipheur.food_ordering_system.common.domain.valueobject.*
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
-import net.philipheur.food_ordering_system.order_service.domain.core.valueobject.OrderItemId
 import net.philipheur.food_ordering_system.order_service.domain.core.valueobject.OrderAddress
+import net.philipheur.food_ordering_system.order_service.domain.core.valueobject.OrderItemId
 import net.philipheur.food_ordering_system.order_service.domain.core.valueobject.TrackingId
 import java.util.*
 
@@ -18,7 +18,7 @@ class Order(
     val price: Money,
     var trackingId: TrackingId? = null,
     var orderStatus: OrderStatus? = null,
-    var failureMessage: List<String>? = null
+    var failureMessage: MutableList<String>? = null
 ) : AggregateRoot<OrderId>(orderId) {
 
     // 주문 검증
@@ -40,6 +40,54 @@ class Order(
         // 각 주문 메뉴들도 초기화
         initializeOrderItems()
     }
+
+    fun pay() {
+        if (orderStatus != OrderStatus.PENDING) {
+            throw OrderDomainException("Order is not in correct state for pay operation")
+        }
+        orderStatus = OrderStatus.PAID
+    }
+
+    // 고객이 주문을 취소롤 보내거나 식당에서 주문을 거절했을 때 실행된다.
+    // 지불에 대한 취소를 처리해야 하기 때문에 Order -> Payment 로 메시지가 발송된다.
+    fun initCancel(failureMessage: List<String>) {
+        if (orderStatus != OrderStatus.PAID) {
+            throw OrderDomainException("Order is not in correct state for initCancel operation")
+        }
+        orderStatus = OrderStatus.CANCELLING
+        updateFailureMessage(failureMessage)
+    }
+
+    // 지불에 실패했을 때나 식당에서 거절했을 때 주문 상태를 취소완료로 설정한다.
+    fun cancel(failureMessage: List<String>) {
+        if (orderStatus != OrderStatus.CANCELLING &&
+            orderStatus != OrderStatus.PENDING
+        ) {
+            throw OrderDomainException("Order is not in correct state for cancel operation")
+        }
+
+        orderStatus = OrderStatus.CANCELLED
+        updateFailureMessage(failureMessage)
+    }
+
+    private fun updateFailureMessage(failureMessage: List<String>) {
+        if (this.failureMessage != null) {
+            this.failureMessage!!
+                .addAll(failureMessage)
+        } else {
+            this.failureMessage = failureMessage.toMutableList()
+        }
+    }
+
+    fun approve() {
+        if (orderStatus != OrderStatus.PAID) {
+            throw OrderDomainException("Order is not in correct state for approve operation")
+        }
+        orderStatus = OrderStatus.APPROVED
+    }
+
+    /* private functions -----------------------------------------------------------------
+    * */
 
     // 주문 객체가 생성되면 id와 주문 상태는 null 이어야 한다.
     private fun checkDefaultState() {
@@ -101,7 +149,7 @@ class Order(
         for (orderItem in items) {
             orderItem.initializeOrderItem(
                 orderId = super.id!!,
-                orderItemId =  OrderItemId(itemId++)
+                orderItemId = OrderItemId(itemId++)
             )
         }
     }

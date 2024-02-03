@@ -4,7 +4,7 @@ import net.philipheur.food_ordering_system.order_service.domain.application_serv
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderResponseDto
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.track.TrackOrderCommand
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.track.TrackOrderResponse
-import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.service.`interface`.OrderApplicationService
+import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.service.OrderApplicationService
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

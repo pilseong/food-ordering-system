@@ -1,6 +1,8 @@
 package net.philipheur.food_ordering_system.order_service.domain.application_service
 
+import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.payment.OrderCancelledPaymentRequestMessagePublisher
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
+import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.payment.OrderPaidRestaurantRequestMessagePublisher
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.CustomerRepository
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.OrderRepository
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.RestaurantRepository
@@ -23,6 +25,18 @@ open class OrderTestConfiguration {
     open fun orderCreatedPaymentRequestMessagePublisher(
     ): OrderCreatedPaymentRequestMessagePublisher {
         return Mockito.mock(OrderCreatedPaymentRequestMessagePublisher::class.java)
+    }
+
+    @Bean
+    open fun orderPaidRestaurantRequestMessagePublisher(
+    ): OrderPaidRestaurantRequestMessagePublisher {
+        return Mockito.mock(OrderPaidRestaurantRequestMessagePublisher::class.java)
+    }
+
+    @Bean
+    open fun orderCancelledPaymentRequestMessagePublisher(
+    ): OrderCancelledPaymentRequestMessagePublisher {
+        return Mockito.mock(OrderCancelledPaymentRequestMessagePublisher::class.java)
     }
 
     // data access layer adapters

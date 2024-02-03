@@ -4,7 +4,9 @@ import net.philipheur.food_ordering_system.common.domain.valueobject.DomainConst
 import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Order
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Restaurant
+import net.philipheur.food_ordering_system.order_service.domain.core.event.OrderCancelledEvent
 import net.philipheur.food_ordering_system.order_service.domain.core.event.OrderCreatedEvent
+import net.philipheur.food_ordering_system.order_service.domain.core.event.OrderPaidEvent
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -14,9 +16,9 @@ class OrderDomainServiceImpl : OrderDomainService {
     private val log by LoggerDelegator()
 
     // 주문 제품의 정보는 productId만 설정되어 있다.
-    override fun validateAndInitializeOrder(
+    override fun validateAndInitiateOrder(
         order: Order,
-        restaurant: Restaurant
+        restaurant: Restaurant,
     ): OrderCreatedEvent {
 
         if (!restaurant.active!!) {
@@ -40,9 +42,41 @@ class OrderDomainServiceImpl : OrderDomainService {
 
         return OrderCreatedEvent(
             order = order,
-            createdAt = ZonedDateTime.now(ZoneId.of(UTC))
+            createdAt = ZonedDateTime.now(ZoneId.of(UTC)),
         )
     }
+
+    override fun payOrder(
+        order: Order,
+    ): OrderPaidEvent {
+        order.pay()
+        log.info("Order with id: ${order.id} is paid")
+
+        return OrderPaidEvent(
+            order = order,
+            createdAt = ZonedDateTime.now(ZoneId.of(UTC)),
+        )
+    }
+
+    override fun cancelOrder(order: Order, failureMessages: List<String>) {
+        order.cancel(failureMessages)
+        log.info("Order with id: ${order.id} is cancelled")
+    }
+
+    override fun approveOrder(order: Order) {
+        order.approve()
+        log.info("Order with id: ${order.id} is approved")
+    }
+
+    override fun cancelOrderPayment(
+        order: Order,
+        failureMessages: List<String>,
+    ): OrderCancelledEvent {
+        order.initCancel(failureMessages)
+        log.info("Order payment is cancelling for order id: ${order.id!!.value}");
+        return OrderCancelledEvent(order, ZonedDateTime.now(ZoneId.of(UTC)))
+    }
+
 
 
 //--------------------------------------------------------------------------
