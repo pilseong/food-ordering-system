@@ -29,6 +29,7 @@ dependencies {
     runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
     // Use JUnit Jupiter for testing.
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     compileOnly("org.projectlombok:lombok:1.18.30")
 }
