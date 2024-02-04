@@ -8,17 +8,18 @@ import net.philipheur.food_ordering_system.order_service.domain.application_serv
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.service.OrderApplicationService
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.CustomerRepository
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.OrderRepository
+import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.PaymentOutboxRepository
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.RestaurantRepository
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Customer
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Product
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Restaurant
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.function.Executable
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,19 +33,25 @@ import java.util.*
 class OrderApplicationServiceTest {
 
     @Autowired
-    private var orderApplicationService: OrderApplicationService? = null
+    private lateinit var orderApplicationService: OrderApplicationService
 
     @Autowired
-    var orderTypeMapper: OrderTypeMapper? = null
+    private lateinit var orderTypeMapper: OrderTypeMapper
 
     @Autowired
-    private var orderRepository: OrderRepository? = null
+    private lateinit var orderRepository: OrderRepository
 
     @Autowired
-    private var customerRepository: CustomerRepository? = null
+    private lateinit var customerRepository: CustomerRepository
 
     @Autowired
-    private var restaurantRepository: RestaurantRepository? = null
+    private lateinit var restaurantRepository: RestaurantRepository
+
+    @Autowired
+    private lateinit var paymentOutboxRepository: PaymentOutboxRepository
+
+    @Autowired
+    private lateinit var objectMapper: OrderTypeMapper
 
     private var createOrderCommand: CreateOrderCommand? = null
     private var createOrderCommandWrongPrice: CreateOrderCommand? = null
@@ -56,6 +63,7 @@ class OrderApplicationServiceTest {
     private val RESTAURANT_ID = UUID.fromString("8a613b22-cf7e-484a-a639-29474c08615c")
     private val PRODUCT_ID = UUID.fromString("659b6a33-388f-4a03-bf7c-25c1cc43cf8c")
     private val ORDER_ID = UUID.fromString("1ba883c2-1521-4d07-b8e5-31695d990c0e")
+    private val SAGA_ID = UUID.fromString("42bfefca-249f-48f4-a9e6-efcd8e5fb2e2")
     private val PRICE = BigDecimal("200.00")
 
     @BeforeAll
@@ -159,50 +167,41 @@ class OrderApplicationServiceTest {
             active = true
         )
 
-        val order = orderTypeMapper!!
+        val order = orderTypeMapper
             .createOrderCommandToOrder(createOrderCommand!!)
         order.id = OrderId(ORDER_ID)
 
-        Mockito.`when`(customerRepository!!.findCustomer(CUSTOMER_ID))
+        Mockito.`when`(customerRepository.findCustomer(CUSTOMER_ID))
             .thenReturn(customer)
 
         Mockito.`when`(
-            restaurantRepository!!.fetchRestaurantInformation(
-                orderTypeMapper!!.createOrderCommandToRestaurant(createOrderCommand!!)
+            restaurantRepository.fetchRestaurantInformation(
+                orderTypeMapper.createOrderCommandToRestaurant(createOrderCommand!!)
             )
         )
             .thenReturn(restaurantResponse)
 
-        Mockito.`when`(orderRepository!!.save(any()))
+        Mockito.`when`(orderRepository.save(any()))
             .thenReturn(order)
     }
 
     @Test
     fun testCreateOrder() {
-        val createOrderResponse = orderApplicationService!!
+        val createOrderResponse = orderApplicationService
             .createOrder(createOrderCommand!!)
 
-        assertEquals(
-            OrderStatus.PENDING,
-            createOrderResponse.orderStatus
-        )
-        assertEquals(
-            "Order Created Successfully",
-            createOrderResponse.message
-        )
-
-        Assertions.assertNotNull(createOrderResponse.orderTrackingId)
+        assertEquals(OrderStatus.PENDING, createOrderResponse.orderStatus)
+        assertEquals("Order Created Successfully", createOrderResponse.message)
+        assertNotNull(createOrderResponse.orderTrackingId)
     }
 
     @Test
     fun testCreateOrderWithWrongProductPrice() {
-        val orderDomainException = Assertions.assertThrows(
-            OrderDomainException::class.java,
-            Executable {
-                orderApplicationService!!.createOrder(
-                    createOrderCommandWrongProductPrice!!
-                )
-            })
+        val orderDomainException = assertThrows<OrderDomainException> {
+            orderApplicationService.createOrder(
+                createOrderCommandWrongProductPrice!!
+            )
+        }
 
         assertEquals(
             "Order item price: 60.00 is not valid for product $PRODUCT_ID",
@@ -216,20 +215,18 @@ class OrderApplicationServiceTest {
 
 
         Mockito.`when`(
-            restaurantRepository!!.fetchRestaurantInformation(
-                orderTypeMapper!!.createOrderCommandToRestaurant(
+            restaurantRepository.fetchRestaurantInformation(
+                orderTypeMapper.createOrderCommandToRestaurant(
                     createOrderCommand!!
                 )
             )
         )
             .thenReturn(restaurantResponse)
 
-        val orderDomainException = Assertions.assertThrows(
-            OrderDomainException::class.java,
-            Executable {
-                orderApplicationService!!
-                    .createOrder(createOrderCommand!!)
-            })
+        val orderDomainException = assertThrows<OrderDomainException> {
+            orderApplicationService
+                .createOrder(createOrderCommand!!)
+        }
 
         assertEquals(
             "Restaurant with id " + RESTAURANT_ID +

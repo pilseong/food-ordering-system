@@ -40,7 +40,7 @@ open class OrderTestConfiguration {
     }
 
     @Bean
-    open fun PaymentRequestMessagePublisher(
+    open fun paymentRequestMessagePublisher(
     ): PaymentRequestMessagePublisher {
         return Mockito.mock(PaymentRequestMessagePublisher::class.java)
     }

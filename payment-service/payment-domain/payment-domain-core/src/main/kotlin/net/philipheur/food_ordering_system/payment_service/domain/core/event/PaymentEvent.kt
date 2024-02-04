@@ -7,5 +7,7 @@ import java.time.ZonedDateTime
 abstract class PaymentEvent(
     val payment: Payment,
     val createAt: ZonedDateTime,
-    val failureMessages: MutableList<String> = mutableListOf()
-): DomainEvent<Payment>
+    val failureMessages: MutableList<String> = mutableListOf(),
+): DomainEvent<Payment> {
+    open fun fire() {}
+}

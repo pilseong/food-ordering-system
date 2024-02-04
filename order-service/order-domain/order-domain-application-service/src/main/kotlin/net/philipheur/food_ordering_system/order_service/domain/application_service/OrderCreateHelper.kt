@@ -18,7 +18,7 @@ import net.philipheur.food_ordering_system.order_service.domain.core.entity.Orde
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Restaurant
 import net.philipheur.food_ordering_system.order_service.domain.core.event.OrderCreatedEvent
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
-import net.philipheur.food_ordering_syustem.infrastructure.outbox.OutboxStatus
+import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.util.*

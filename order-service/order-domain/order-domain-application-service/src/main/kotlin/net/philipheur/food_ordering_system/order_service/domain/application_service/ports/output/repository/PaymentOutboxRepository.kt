@@ -2,7 +2,7 @@ package net.philipheur.food_ordering_system.order_service.domain.application_ser
 
 import net.philipheur.food_ordering_system.infrastructure.saga.SagaStatus
 import net.philipheur.food_ordering_system.order_service.domain.application_service.outbox.model.payment.OrderPaymentOutboxMessage
-import net.philipheur.food_ordering_syustem.infrastructure.outbox.OutboxStatus
+import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
 
 import java.util.*
 

@@ -7,6 +7,8 @@ import net.philipheur.food_ordering_system.infrastructure.kafka.model.avro.order
 import net.philipheur.food_ordering_system.infrastructure.kafka.model.avro.order.PaymentStatus.*
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.message.PaymentResponse
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.message.PaymentResponseMessageListener
+import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderNotFoundException
+import org.springframework.dao.OptimisticLockingFailureException
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.KafkaHeaders
 import org.springframework.messaging.handler.annotation.Header
@@ -35,24 +37,38 @@ class PaymentResponseKafkaListener(
             "${models.size} number of payment responses received with " +
                     "keys:$keys, partitions:$partitions and offsets: $offsets",
         )
-
         models.forEach { model ->
-            if (model.paymentStatus == COMPLETED) {
-                log.info(
-                    "Processing successful payment " +
+            try {
+                if (model.paymentStatus == COMPLETED) {
+                    log.info(
+                        "Processing successful payment " +
+                                "for order id: ${model.orderId}"
+                    )
+                    paymentResponseMessageListener.paymentCompleted(
+                        modelToMessage(model)
+                    )
+                } else if (
+                    model.paymentStatus == CANCELLED ||
+                    model.paymentStatus == FAILED
+                ) {
+                    log.info("Processing unsuccessful payment " +
+                            "for order id: ${model.orderId}")
+                    paymentResponseMessageListener.paymentCancelled(
+                        modelToMessage(model)
+                    )
+                }
+            } catch (e: OptimisticLockingFailureException) {
+                log.error(
+                    "Caught optimistic locking exception " +
+                            "in PaymentResponseKafkaListener " +
                             "for order id: ${model.orderId}"
                 )
-                paymentResponseMessageListener.paymentCompleted(
-                    modelToMessage(model)
+                // no need to do anything. This is a normal process
+            } catch (e: OrderNotFoundException) {
+                log.error(
+                    "No order found for order id: ${model.orderId}"
                 )
-            } else if (
-                model.paymentStatus == CANCELLED ||
-                model.paymentStatus == FAILED
-            ) {
-                log.info("Processing unsuccessful payment for order id: ${model.orderId}", )
-                paymentResponseMessageListener.paymentCancelled(
-                    modelToMessage(model)
-                )
+                // no need to do anything. This is a normal process
             }
         }
     }

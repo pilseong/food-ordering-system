@@ -9,7 +9,7 @@ import net.philipheur.food_ordering_system.order_service.domain.application_serv
 import net.philipheur.food_ordering_system.order_service.domain.application_service.outbox.model.payment.OrderPaymentOutboxMessage
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.PaymentOutboxRepository
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
-import net.philipheur.food_ordering_syustem.infrastructure.outbox.OutboxStatus
+import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.util.*

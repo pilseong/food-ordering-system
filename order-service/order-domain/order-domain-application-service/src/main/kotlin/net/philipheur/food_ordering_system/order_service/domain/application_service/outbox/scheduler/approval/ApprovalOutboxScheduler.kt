@@ -3,8 +3,8 @@ package net.philipheur.food_ordering_system.order_service.domain.application_ser
 import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.infrastructure.saga.SagaStatus
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.restaurantapproval.RestaurantApprovalRequestMessagePublisher
-import net.philipheur.food_ordering_syustem.infrastructure.outbox.OutboxScheduler
-import net.philipheur.food_ordering_syustem.infrastructure.outbox.OutboxStatus
+import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxScheduler
+import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

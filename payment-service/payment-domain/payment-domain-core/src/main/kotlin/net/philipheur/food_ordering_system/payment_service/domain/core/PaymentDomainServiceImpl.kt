@@ -52,7 +52,7 @@ class PaymentDomainServiceImpl : PaymentDomainService {
                 payment = payment,
                 createdAt = ZonedDateTime.now(ZoneId.of(UTC)),
                 failureMessages = failureMessages,
-                paymentCompletedEventPublisher = paymentCompletedMessagePublisher
+                paymentCompletedMessagePublisher = paymentCompletedMessagePublisher
             )
         } else {
             log.info("Payment initiation has failed for order id: ${payment.orderId.value}")
@@ -62,8 +62,7 @@ class PaymentDomainServiceImpl : PaymentDomainService {
                 payment = payment,
                 createdAt = ZonedDateTime.now(ZoneId.of(UTC)),
                 failureMessages = failureMessages,
-                paymentFailedEventPublisher = paymentFailedMessagePublisher
-
+                paymentFailedMessagePublisher = paymentFailedMessagePublisher,
             )
         }
     }
@@ -89,7 +88,7 @@ class PaymentDomainServiceImpl : PaymentDomainService {
             return PaymentCancelledEvent(
                 payment = payment,
                 createdAt = ZonedDateTime.now(ZoneId.of(UTC)),
-                paymentCancelledPublisher = paymentCancelledMessagePublisher
+                paymentCancelledMessagePublisher = paymentCancelledMessagePublisher
             )
         } else {
             log.info("Payment cancellation has failed for order id: ${payment.orderId.value}")
@@ -98,7 +97,7 @@ class PaymentDomainServiceImpl : PaymentDomainService {
                 payment = payment,
                 createdAt = ZonedDateTime.now(ZoneId.of(UTC)),
                 failureMessages = failureMessages,
-                paymentFailedEventPublisher = paymentFailedMessagePublisher
+                paymentFailedMessagePublisher = paymentFailedMessagePublisher
             )
         }
     }
