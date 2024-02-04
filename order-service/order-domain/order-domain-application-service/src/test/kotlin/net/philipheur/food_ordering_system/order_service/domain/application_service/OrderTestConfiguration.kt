@@ -3,9 +3,9 @@ package net.philipheur.food_ordering_system.order_service.domain.application_ser
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.payment.OrderCancelledPaymentRequestMessagePublisher
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.payment.OrderPaidRestaurantRequestMessagePublisher
-import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.CustomerRepository
-import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.OrderRepository
-import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.RestaurantRepository
+import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.payment.PaymentRequestMessagePublisher
+import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.message.publisher.restaurantapproval.RestaurantApprovalRequestMessagePublisher
+import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.*
 import net.philipheur.food_ordering_system.order_service.domain.core.OrderDomainService
 import net.philipheur.food_ordering_system.order_service.domain.core.OrderDomainServiceImpl
 import org.mockito.Mockito
@@ -39,6 +39,18 @@ open class OrderTestConfiguration {
         return Mockito.mock(OrderCancelledPaymentRequestMessagePublisher::class.java)
     }
 
+    @Bean
+    open fun PaymentRequestMessagePublisher(
+    ): PaymentRequestMessagePublisher {
+        return Mockito.mock(PaymentRequestMessagePublisher::class.java)
+    }
+
+    @Bean
+    open fun restaurantApprovalRequestMessagePublisher()
+            : RestaurantApprovalRequestMessagePublisher {
+        return Mockito.mock(RestaurantApprovalRequestMessagePublisher::class.java)
+    }
+
     // data access layer adapters
     @Bean
     open fun orderRepository(): OrderRepository {
@@ -56,7 +68,18 @@ open class OrderTestConfiguration {
     }
 
     @Bean
+    open fun paymentOutboxRepository(): PaymentOutboxRepository {
+        return Mockito.mock(PaymentOutboxRepository::class.java)
+    }
+
+    @Bean
+    open fun approvalOutboxRepository(): ApprovalOutboxRepository {
+        return Mockito.mock(ApprovalOutboxRepository::class.java)
+    }
+
+    @Bean
     open fun orderDomainService(): OrderDomainService {
         return OrderDomainServiceImpl()
     }
+
 }

@@ -9,7 +9,9 @@ import net.philipheur.food_ordering_system.order_service.domain.application_serv
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.CustomerRepository
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.OrderRepository
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.RestaurantRepository
-import net.philipheur.food_ordering_system.order_service.domain.core.entity.*
+import net.philipheur.food_ordering_system.order_service.domain.core.entity.Customer
+import net.philipheur.food_ordering_system.order_service.domain.core.entity.Product
+import net.philipheur.food_ordering_system.order_service.domain.core.entity.Restaurant
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
