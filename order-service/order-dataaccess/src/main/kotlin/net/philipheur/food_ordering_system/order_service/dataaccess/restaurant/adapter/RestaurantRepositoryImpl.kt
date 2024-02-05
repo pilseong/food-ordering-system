@@ -1,9 +1,9 @@
 package net.philipheur.food_ordering_system.order_service.dataaccess.restaurant.adapter
 
+import net.philipheur.food_ordering_system.common.dataaccess.restaurant.repository.RestaurantJpaRepository
 import net.philipheur.food_ordering_system.common.domain.valueobject.Money
 import net.philipheur.food_ordering_system.common.domain.valueobject.ProductId
 import net.philipheur.food_ordering_system.common.domain.valueobject.RestaurantId
-import net.philipheur.food_ordering_system.order_service.dataaccess.restaurant.repository.RestaurantJpaRepository
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.RestaurantRepository
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Product
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Restaurant

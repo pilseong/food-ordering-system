@@ -19,7 +19,6 @@ class PaymentRequestMessageListenerImpl(
         val paymentEvent = paymentRequestHelper
             .persisPayment(paymentRequest)
 
-
         log.info("Publishing payment event with " +
                 "payment id: ${paymentEvent.payment.id!!.value} and " +
                 "order id: ${paymentEvent.payment.orderId.value}")

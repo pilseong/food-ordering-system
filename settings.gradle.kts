@@ -14,7 +14,7 @@ rootProject.name = "food-ordering-system"
 include(":common-domain")
 include(":common-controller")
 include(":common-utils")
-
+include(":common-dataaccess")
 include(":customer-service")
 
 include(":order-domain-core")
@@ -35,6 +35,11 @@ include(":payment-dataaccess")
 include(":payment-messaging")
 include(":payment-app")
 
+include(":restaurant-domain-core")
+include(":restaurant-domain-application-service")
+include(":restaurant-dataaccess")
+include(":restaurant-messaging")
+
 include(":saga")
 
 include(":outbox")
@@ -47,6 +52,8 @@ project(":common-controller").projectDir =
     file("common/common-controller")
 project(":common-utils").projectDir =
     file("common/common-utils")
+project(":common-dataaccess").projectDir =
+    file("common/common-dataaccess")
 
 project(":customer-service").projectDir =
     file("customer-service")
@@ -83,6 +90,16 @@ project(":payment-messaging").projectDir =
     file("payment-service/payment-messaging")
 project(":payment-app").projectDir =
     file("payment-service/payment-app")
+
+project(":restaurant-domain-core").projectDir =
+    file("restaurant-service/restaurant-domain/restaurant-domain-core")
+project(":restaurant-domain-application-service").projectDir =
+    file("restaurant-service/restaurant-domain/restaurant-domain-application-service")
+project(":restaurant-dataaccess").projectDir =
+    file("restaurant-service/restaurant-dataaccess")
+project(":restaurant-messaging").projectDir =
+    file("restaurant-service/restaurant-messaging")
+
 
 project(":saga").projectDir =
     file("infrastructure/saga")

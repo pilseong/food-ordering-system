@@ -5,16 +5,17 @@ import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
-import org.springframework.web.server.adapter.WebHttpHandlerBuilder.applicationContext
 
 @EnableJpaRepositories(
     basePackages = [
-        "net.philipheur.food_ordering_system.order_service.dataaccess"
+        "net.philipheur.food_ordering_system.order_service.dataaccess",
+        "net.philipheur.food_ordering_system.common.dataaccess",
     ]
 )
 @EntityScan(
     basePackages = [
-        "net.philipheur.food_ordering_system.order_service.dataaccess"
+        "net.philipheur.food_ordering_system.order_service.dataaccess",
+        "net.philipheur.food_ordering_system.common.dataaccess",
     ]
 )
 @SpringBootApplication(

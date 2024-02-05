@@ -4,13 +4,11 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":saga"))
-    implementation(project(":outbox"))
-    api(project(":order-domain-application-service"))
     api(project(":common-dataaccess"))
+    api(project(":restaurant-domain-application-service"))
     api("org.springframework:spring-tx:6.1.2")
     api("org.springframework.boot:spring-boot-starter-data-jpa:3.2.2")
     api("org.postgresql:postgresql:42.6.0")
 }
 
-description = "order-dataaccess"
+description = "restaurant-dataaccess"

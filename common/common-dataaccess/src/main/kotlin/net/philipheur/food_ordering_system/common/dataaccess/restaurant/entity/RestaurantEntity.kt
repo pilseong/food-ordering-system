@@ -1,12 +1,11 @@
-package net.philipheur.food_ordering_system.order_service.dataaccess.restaurant.entity
+package net.philipheur.food_ordering_system.common.dataaccess.restaurant.entity
 
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
-import net.philipheur.food_ordering_system.common.domain.valueobject.RestaurantId
 import java.math.BigDecimal
-import java.util.UUID
+import java.util.*
 
 @IdClass(RestaurantEntityId::class)
 @Entity
@@ -21,7 +20,8 @@ class RestaurantEntity(
     var restaurantActive: Boolean,
 
     var productName: String,
-    var productPrice: BigDecimal
+    var productPrice: BigDecimal,
+    var productAvailable: Boolean
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
