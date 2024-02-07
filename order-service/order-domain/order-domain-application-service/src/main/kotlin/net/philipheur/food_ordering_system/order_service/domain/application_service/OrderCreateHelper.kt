@@ -2,6 +2,7 @@ package net.philipheur.food_ordering_system.order_service.domain.application_ser
 
 import net.philipheur.food_ordering_system.common.domain.valueobject.PaymentOrderStatus
 import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
+import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
 import net.philipheur.food_ordering_system.infrastructure.saga.order.SagaConstants
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderCommand
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderResponseDto
@@ -18,7 +19,6 @@ import net.philipheur.food_ordering_system.order_service.domain.core.entity.Orde
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Restaurant
 import net.philipheur.food_ordering_system.order_service.domain.core.event.OrderCreatedEvent
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
-import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -34,10 +34,7 @@ open class OrderCreateHelper(
     private val paymentOutboxHelper: PaymentOutboxHelper,
     private val orderSagaHelper: OrderSagaHelper,
 ) {
-
     private val log by LoggerDelegator()
-
-
     @Transactional
     open fun createOrder(
         createOrderCommand: CreateOrderCommand
@@ -53,21 +50,24 @@ open class OrderCreateHelper(
 
         // outbox DB에 payload 로 저장할 메시지 객체 생성
         val payload = OrderPaymentEventPayload(
-            orderId = event.order.id.toString(),
+            orderId = event.order.id!!.value.toString(),
             customerId = event.order.customerId.value.toString(),
             price = event.order.price.amount,
             createdAt = event.createdAt,
             paymentOrderStatus = PaymentOrderStatus.PENDING.name
         )
 
-        // payment outbox 에 저장
+        val resultPayload = paymentOutboxHelper.createPayload(payload)
+
+        // payment outbox 에 저장 -> sagaId가 생성된다.
         paymentOutboxHelper.saveOutboxMessage(
             OrderPaymentOutboxMessage(
                 id = UUID.randomUUID(),
-                sagaId = UUID.randomUUID(),
+//                sagaId = UUID.randomUUID(),
+                sagaId = event.order.id!!.value,    // 임시로
                 createdAt = event.createdAt,
                 type = SagaConstants.ORDER_SAGA_NAME,
-                payload = paymentOutboxHelper.createPayload(payload),
+                payload = resultPayload,
                 orderStatus = event.order.orderStatus!!,
                 sagaStatus = orderSagaHelper
                     .orderStatusToSagaStatus(event.order.orderStatus),

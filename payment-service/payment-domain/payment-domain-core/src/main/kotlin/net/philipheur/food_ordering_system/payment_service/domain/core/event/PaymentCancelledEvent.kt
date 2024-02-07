@@ -8,4 +8,8 @@ class PaymentCancelledEvent(
     payment: Payment,
     createdAt: ZonedDateTime,
     val paymentCancelledMessagePublisher: DomainEventPublisher<PaymentCancelledEvent>
-) : PaymentEvent(payment, createdAt)
+) : PaymentEvent(payment, createdAt) {
+    override fun fire() {
+        paymentCancelledMessagePublisher.publish(this)
+    }
+}

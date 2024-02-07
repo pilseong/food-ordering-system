@@ -17,14 +17,15 @@ import java.util.*
 
 @Component
 class RestaurantApprovalRequestKafkaListener(
-    private val restaurantApprovalRequestMessageListener: RestaurantApprovalRequestMessageListener
+    private val requestMessageListener:
+    RestaurantApprovalRequestMessageListener,
 ) : KafkaConsumer<RestaurantApprovalRequestAvroModel> {
 
     private val log by LoggerDelegator()
 
     @KafkaListener(
-        id = "\${kafka-consumer-config.restaurant-consumer-group-id}",
-        topics = ["\${payment-service.restaurant-request-topic-name}"]
+        id = "\${kafka-consumer-config.restaurant-approval-consumer-group-id}",
+        topics = ["\${restaurant-service.restaurant-approval-request-topic-name}"]
     )
 
     override fun receive(
@@ -35,7 +36,9 @@ class RestaurantApprovalRequestKafkaListener(
     ) {
         log.info(
             "${models.size} number of restaurant approval requests received with " +
-                    "keys:$keys, partitions:$partitions and offsets: $offsets",
+                    "keys:$keys, " +
+                    "partitions:$partitions and " +
+                    "offsets: $offsets",
         )
 
         // 수신한 식당 승인 요청 kafka 메시지를 도메인 객체로 변환하고 application service 에 통보한다.
@@ -44,13 +47,13 @@ class RestaurantApprovalRequestKafkaListener(
                 "Processing restaurant approval " +
                         "for order id: ${model.orderId}"
             )
-            restaurantApprovalRequestMessageListener
+            // 비즈니스 로직으로 메시지 전달
+            requestMessageListener
                 .approveOrder(
                     modelToMessage(model)
                 )
         }
     }
-
 
     private fun modelToMessage(
         model: RestaurantApprovalRequestAvroModel

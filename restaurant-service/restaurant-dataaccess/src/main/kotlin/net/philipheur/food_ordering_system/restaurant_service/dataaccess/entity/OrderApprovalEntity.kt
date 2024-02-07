@@ -8,11 +8,9 @@ import java.util.*
 @Entity
 @Table(name = "order_approval", schema = "restaurant")
 class OrderApprovalEntity(
-    @Id
-    var id: UUID,
+    @Id var id: UUID,
     var restaurantId: UUID,
     var orderId: UUID,
-
     @Enumerated(EnumType.STRING)
     var status: OrderApprovalStatus
 ) {

@@ -44,7 +44,7 @@ open class ApprovalOutboxHelper(
 
 
     @Transactional
-    fun saveOutboxMessage(orderApprovalOutboxMessage: OrderApprovalOutboxMessage) {
+    open fun saveOutboxMessage(orderApprovalOutboxMessage: OrderApprovalOutboxMessage) {
         try {
             approvalOutboxRepository.save(orderApprovalOutboxMessage)
             log.info(
@@ -76,7 +76,7 @@ open class ApprovalOutboxHelper(
         )
     }
 
-    fun createPayload(orderApprovalEventPayload: OrderApprovalEventPayload): String {
+    open fun createPayload(orderApprovalEventPayload: OrderApprovalEventPayload): String {
         try {
             return objectMapper.writeValueAsString(orderApprovalEventPayload)
         } catch (e: JsonProcessingException) {

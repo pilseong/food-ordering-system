@@ -26,7 +26,7 @@ open class PaymentOutboxScheduler(
     // 주기적으로 돌아가면서 데이터 베이스에 쌓아였는 메시지를 발송한다.
     override fun processOutboxMessage() {
 
-        // 메시지 검색
+        // 처리할 메시지 데이터 베이스에서 검색
         val paymentOutboxMessages =
             paymentOutboxHelper
                 .getPaymentOutboxMessageByOutboxStatusAndSagaStatus(
@@ -34,7 +34,7 @@ open class PaymentOutboxScheduler(
                     sagaStatus = arrayOf(STARTED, COMPENSATING)
                 )
 
-        // 메시지 처리
+        // 메시지 처리 시작
         if (paymentOutboxMessages.isNotEmpty()) {
             log.info(
                 "Received ${paymentOutboxMessages.size} OrderPaymentOutboxMessage with " +

@@ -12,8 +12,9 @@ import java.util.*
 
 @Component
 class RestaurantApprovalEventKafkaPublisher(
-    private val restaurantServiceConfigData: RestaurantServiceConfigData,
-    private val kafkaProducer: KafkaProducer<String, RestaurantApprovalResponseAvroModel>
+    private val configData: RestaurantServiceConfigData,
+    private val kafkaProducer:
+    KafkaProducer<String, RestaurantApprovalResponseAvroModel>,
 ) : OrderApprovedMessagePublisher {
 
     private val log by LoggerDelegator()
@@ -29,16 +30,18 @@ class RestaurantApprovalEventKafkaPublisher(
         try {
             val model = RestaurantApprovalResponseAvroModel(
                 UUID.randomUUID(),
-                UUID.randomUUID(),
-                orderId,
+                orderId,    // 임시로
                 domainEvent.restaurantId.value,
+                orderId,
                 domainEvent.createdAt.toInstant(),
-                OrderApprovalStatus.valueOf(domainEvent.orderApproval.orderApprovalStatus.name),
+                OrderApprovalStatus.valueOf(
+                    domainEvent.orderApproval.orderApprovalStatus.name
+                ),
                 domainEvent.failureMessages,
             )
 
             kafkaProducer.send(
-                topicName = restaurantServiceConfigData.restaurantResponseTopicName,
+                topicName = configData.restaurantApprovalResponseTopicName,
                 key = domainEvent.orderApproval.orderId.value.toString(),
                 message = model,
             ) { result, ex ->
@@ -57,7 +60,7 @@ class RestaurantApprovalEventKafkaPublisher(
                     log.error(
                         "Error while sending RestaurantApprovalResponseAvroModel" +
                                 " message $model " +
-                                "to topic ${restaurantServiceConfigData.restaurantResponseTopicName}",
+                                "to topic ${configData.restaurantApprovalResponseTopicName}",
                         ex
                     );
                 }

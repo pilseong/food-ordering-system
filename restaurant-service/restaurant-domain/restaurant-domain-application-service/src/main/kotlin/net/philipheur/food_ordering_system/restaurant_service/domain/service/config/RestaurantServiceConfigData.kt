@@ -5,6 +5,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding
 
 @ConfigurationProperties(prefix = "restaurant-service")
 data class RestaurantServiceConfigData @ConstructorBinding constructor(
-    val restaurantRequestTopicName: String,
-    val restaurantResponseTopicName: String,
+    val restaurantApprovalRequestTopicName: String,
+    val restaurantApprovalResponseTopicName: String,
 )

@@ -9,16 +9,15 @@ import java.util.*
 
 @IdClass(RestaurantEntityId::class)
 @Entity
-@Table(name = "order_restaurant_m_view", schema = "restaurant")
+@Table(
+    name = "order_restaurant_m_view",
+    schema = "restaurant"
+)
 class RestaurantEntity(
-    @Id
-    var restaurantId: UUID,
-    @Id
-    var productId: UUID,
-
+    @Id var restaurantId: UUID,
+    @Id var productId: UUID,
     var restaurantName: String,
     var restaurantActive: Boolean,
-
     var productName: String,
     var productPrice: BigDecimal,
     var productAvailable: Boolean

@@ -50,7 +50,7 @@ class OrderDomainServiceImpl : OrderDomainService {
         order: Order,
     ): OrderPaidEvent {
         order.pay()
-        log.info("Order with id: ${order.id} is paid")
+        log.info("Order with id: ${order.id!!.value} is paid")
 
         return OrderPaidEvent(
             order = order,

@@ -191,7 +191,7 @@ open class OrderApprovalSaga(
     private fun completeApproval(
         data: RestaurantApprovalResponse
     ): Order {
-        log.info("Completing approval for order with id: ${data.sagaId}");
+        log.info("Completing approval for order with id: ${data.orderId}");
         // 주문 검색
         val order = findOrder(data.orderId)
         // 주문 비즈니스 로직 처리 -> OrderStatus 를 PAID 로 변경
@@ -205,7 +205,7 @@ open class OrderApprovalSaga(
     private fun cancelInit(
         data: RestaurantApprovalResponse
     ): OrderCancelledEvent {
-        log.info("Cancelling for order payment with id: ${data.sagaId}");
+        log.info("Cancelling for order payment with id: ${data.orderId}");
         // 주문 검색
         val order = findOrder(data.orderId)
         // 주문 비즈니스 로직 처리 -> OrderStatus 를 PAID 로 변경

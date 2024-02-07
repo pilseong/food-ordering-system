@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     api(project(":common-controller"))
+    api(project(":common-dataaccess"))
     api(project(":order-controller"))
     api(project(":order-dataaccess"))
     api(project(":order-domain-application-service"))

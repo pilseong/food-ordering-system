@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":saga"))
-    implementation(project(":outbox"))
+    api(project(":saga"))
+    api(project(":outbox"))
     api(project(":order-domain-application-service"))
     api(project(":common-dataaccess"))
     api("org.springframework:spring-tx:6.1.2")

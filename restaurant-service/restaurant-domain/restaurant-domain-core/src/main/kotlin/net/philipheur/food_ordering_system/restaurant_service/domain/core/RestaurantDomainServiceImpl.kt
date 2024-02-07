@@ -25,14 +25,14 @@ class RestaurantDomainServiceImpl : RestaurantDomainService {
         // 주문의 상태와 주문의 가격을 검증한다.
         restaurant.validateOrder(failureMessages)
 
-        log.info("Validating order with id: ${restaurant.orderDetail.id}")
+        log.info("Validating order with id: ${restaurant.orderDetail.id!!.value}")
 
         // 에러메시지가 없다는 것은 정상처리 되었다는 의미
         if (failureMessages.isEmpty()) {
-            log.info("Order is approved for order id: ${restaurant.orderApproval!!.id}")
+            log.info("Order is approved for order id: ${restaurant.orderDetail.id!!.value}")
 
             // OrderApproval 객체를 생성하고 요청응답을 승인으로 한다.
-            restaurant.createOrderApproval(OrderApprovalStatus.APPROVAL)
+            restaurant.createOrderApproval(OrderApprovalStatus.APPROVED)
             return OrderApprovedEvent(
                 orderApproval = restaurant.orderApproval!!,
                 restaurantId = restaurant.id!!,
@@ -41,7 +41,7 @@ class RestaurantDomainServiceImpl : RestaurantDomainService {
                 orderApprovedEventDomainEventPublisher = orderApprovedEventDomainEventPublisher
             )
         } else {
-            log.info("Order is rejected for order id: ${restaurant.orderDetail.id}")
+            log.info("Order is rejected for order id: ${restaurant.orderDetail.id!!.value}")
 
             // OrderApproval 객체를 생성하고 요청에 거절로 설정
             restaurant.createOrderApproval(OrderApprovalStatus.REJECTED)

@@ -39,6 +39,7 @@ include(":restaurant-domain-core")
 include(":restaurant-domain-application-service")
 include(":restaurant-dataaccess")
 include(":restaurant-messaging")
+include(":restaurant-app")
 
 include(":saga")
 
@@ -99,6 +100,9 @@ project(":restaurant-dataaccess").projectDir =
     file("restaurant-service/restaurant-dataaccess")
 project(":restaurant-messaging").projectDir =
     file("restaurant-service/restaurant-messaging")
+project(":restaurant-app").projectDir =
+    file("restaurant-service/restaurant-app")
+
 
 
 project(":saga").projectDir =

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class PaymentFailedKafkaMessagePublisher(
+open class PaymentFailedKafkaMessagePublisher(
     private val paymentServiceConfigData: PaymentServiceConfigData,
     private val kafkaProducer: KafkaProducer<String, PaymentResponseAvroModel>,
 ) : PaymentFailedMessagePublisher {
@@ -26,7 +26,7 @@ class PaymentFailedKafkaMessagePublisher(
         try {
             val paymentResponseAvroModel = PaymentResponseAvroModel(
                 UUID.randomUUID(),
-                UUID.randomUUID(),
+                payment.orderId.value,  // outbox 구현전까지 임시
                 payment.id!!.value,
                 payment.customerId.value,
                 payment.orderId.value,

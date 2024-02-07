@@ -60,8 +60,7 @@ open class RestaurantApprovalRequestHelper(
     }
 
     private fun findRestaurant(
-        restaurantApprovalRequest:
-        RestaurantApprovalRequest
+        restaurantApprovalRequest: RestaurantApprovalRequest
     ): Restaurant {
 
         // 요청 객체 정보를 가지고 식당 객체를 생성

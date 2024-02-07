@@ -42,6 +42,7 @@
             <option value="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-application-service" />
             <option value="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core" />
             <option value="$PROJECT_DIR$/payment-service/payment-messaging" />
+            <option value="$PROJECT_DIR$/restaurant-service/restaurant-app" />
             <option value="$PROJECT_DIR$/restaurant-service/restaurant-dataaccess" />
             <option value="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-application-service" />
             <option value="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core" />

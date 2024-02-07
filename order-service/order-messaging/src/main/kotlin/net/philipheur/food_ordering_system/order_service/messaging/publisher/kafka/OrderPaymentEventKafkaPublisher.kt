@@ -48,9 +48,11 @@ class OrderPaymentEventKafkaPublisher(
                 PaymentOrderStatus.valueOf(payload.paymentOrderStatus)
             )
 
+            // 키는 sagaId로 처리해야 같은 partition 에서 처리 가능하다.
             kafkaProducer.send(
                 topicName = orderServiceConfigData.paymentRequestTopicName,
-                key = sagaId.toString(),
+//                key = sagaId.toString(),
+                key = payload.orderId,
                 message = paymentRequestAvroModel,
             ) { result, ex ->
                 if (ex == null) {
@@ -86,7 +88,7 @@ class OrderPaymentEventKafkaPublisher(
 
             log.info(
                 "PaymentRequestAvroModel sent to Kafka " +
-                        "for order id: ${payload.orderId} and" +
+                        "for order id: ${payload.orderId} and " +
                         "saga id: ${orderPaymentOutboxMessage.sagaId}"
             )
         } catch (ex: Exception) {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 // 카프카에서 수신한 결제 결과를 받아 처리 한다.
 @Service
-class PaymentResponseMessageListenerImpl(
+open class PaymentResponseMessageListenerImpl(
     private val orderPaymentSaga: OrderPaymentSaga
 ) : PaymentResponseMessageListener {
 

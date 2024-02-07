@@ -8,7 +8,7 @@ import net.philipheur.food_ordering_system.restaurant_service.domain.core.valueo
 import java.util.*
 
 class Restaurant(
-    restaurantId: RestaurantId,
+    val restaurantId: RestaurantId,
     var orderApproval: OrderApproval? = null,
     var active: Boolean? = null,
     val orderDetail: OrderDetail
@@ -50,7 +50,7 @@ class Restaurant(
     ) {
         orderApproval = OrderApproval(
             orderApprovalId = OrderApprovalId(UUID.randomUUID()),
-            restaurantId = id!!,
+            restaurantId = restaurantId,
             orderId = orderDetail.id!!,
             orderApprovalStatus = orderApprovalStatus
         )

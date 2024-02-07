@@ -15,17 +15,17 @@ import org.springframework.stereotype.Component
 class RestaurantRepositoryImpl(
     private val restaurantJpaRepository: RestaurantJpaRepository,
 ) : RestaurantRepository {
-    override fun findRestaurantInformation(
-        restaurant: Restaurant
-    ): Restaurant {
-        val restaurantProductsIds = restaurant.orderDetail.products.map {
-            it.id!!.value
-        }
+    override fun findRestaurantInformation(restaurant: Restaurant): Restaurant {
+        val restaurantProductsIds = restaurant.orderDetail.products
+            .map {
+                it.id!!.value
+            }
 
-        val restaurantEntities = restaurantJpaRepository.findByRestaurantIdAndProductIdIn(
-            restaurantId = restaurant.id!!.value,
-            productIds = restaurantProductsIds
-        )
+        val restaurantEntities =
+            restaurantJpaRepository.findByRestaurantIdAndProductIdIn(
+                restaurantId = restaurant.id!!.value,
+                productIds = restaurantProductsIds
+            )
 
         if (restaurantEntities.isEmpty()) {
             throw RestaurantDataAccessException(

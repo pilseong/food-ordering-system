@@ -1,21 +1,16 @@
 package net.philipheur.food_ordering_system.order_service.rest
 
+import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderCommand
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderResponseDto
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.track.TrackOrderCommand
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.track.TrackOrderResponse
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.service.OrderApplicationService
-import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
-inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
+//inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
 
 @RestController
 @RequestMapping(
@@ -25,7 +20,7 @@ inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
 class OrderController(
     private val orderApplicationService: OrderApplicationService
 ) {
-    private val log = logger()
+    private val log by LoggerDelegator()
 
     @PostMapping
     fun createOrder(

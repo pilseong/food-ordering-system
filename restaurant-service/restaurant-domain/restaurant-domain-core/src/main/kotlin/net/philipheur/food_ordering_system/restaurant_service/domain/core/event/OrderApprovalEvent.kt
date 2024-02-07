@@ -9,7 +9,7 @@ abstract class OrderApprovalEvent(
     val orderApproval: OrderApproval,
     val restaurantId: RestaurantId,
     val failureMessages: MutableList<String>,
-    val createdAt: ZonedDateTime
+    val createdAt: ZonedDateTime,
 ) : DomainEvent<OrderApproval> {
     open fun fire() {}
 }

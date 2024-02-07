@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component
 
 // 카프카에서 수신한 메시지를 domain 에서 정의한 Listener 인터페이스로 호출해 준다.
 @Component
-class PaymentResponseKafkaListener(
-    private val paymentResponseMessageListener: PaymentResponseMessageListener,
+open class PaymentResponseKafkaListener(
+    private val messageListener: PaymentResponseMessageListener,
 ) : KafkaConsumer<PaymentResponseAvroModel> {
 
     private val log by LoggerDelegator()
@@ -42,9 +42,10 @@ class PaymentResponseKafkaListener(
                 if (model.paymentStatus == COMPLETED) {
                     log.info(
                         "Processing successful payment " +
-                                "for order id: ${model.orderId}"
+                                "for order id: ${model.orderId} " +
+                                "sagaId: ${model.sagaId}"
                     )
-                    paymentResponseMessageListener.paymentCompleted(
+                    messageListener.paymentCompleted(
                         modelToMessage(model)
                     )
                 } else if (
@@ -53,7 +54,7 @@ class PaymentResponseKafkaListener(
                 ) {
                     log.info("Processing unsuccessful payment " +
                             "for order id: ${model.orderId}")
-                    paymentResponseMessageListener.paymentCancelled(
+                    messageListener.paymentCancelled(
                         modelToMessage(model)
                     )
                 }

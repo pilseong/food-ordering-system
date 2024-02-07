@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common-utils"))
-    implementation(project(":saga"))
-    implementation(project(":outbox"))
+    api(project(":common-utils"))
+    api(project(":saga"))
+    api(project(":outbox"))
     api(project(":order-domain-core"))
     api("org.springframework.boot:spring-boot-starter-validation:3.2.2")
     api("org.springframework:spring-tx:6.1.2")

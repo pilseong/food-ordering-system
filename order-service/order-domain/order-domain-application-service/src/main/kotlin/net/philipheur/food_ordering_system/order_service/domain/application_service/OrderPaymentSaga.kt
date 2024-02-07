@@ -5,6 +5,7 @@ import net.philipheur.food_ordering_system.common.domain.valueobject.OrderId
 import net.philipheur.food_ordering_system.common.domain.valueobject.PaymentStatus
 import net.philipheur.food_ordering_system.common.domain.valueobject.RestaurantOrderStatus
 import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
+import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
 import net.philipheur.food_ordering_system.infrastructure.saga.SagaStatus
 import net.philipheur.food_ordering_system.infrastructure.saga.SagaStep
 import net.philipheur.food_ordering_system.infrastructure.saga.order.SagaConstants
@@ -20,7 +21,6 @@ import net.philipheur.food_ordering_system.order_service.domain.core.entity.Orde
 import net.philipheur.food_ordering_system.order_service.domain.core.event.OrderPaidEvent
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderNotFoundException
-import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.time.ZoneId
@@ -196,7 +196,7 @@ open class OrderPaymentSaga(
     ) {
         // order approval outbox 메시지 생성
         val payload = OrderApprovalEventPayload(
-            orderId = orderPaidEvent.order.id.toString(),
+            orderId = orderPaidEvent.order.id!!.value.toString(),
             restaurantId = orderPaidEvent.order.restaurantId.value.toString(),
             restaurantOrderStatus = RestaurantOrderStatus.PAID.name,
             products = orderPaidEvent.order.items.map {

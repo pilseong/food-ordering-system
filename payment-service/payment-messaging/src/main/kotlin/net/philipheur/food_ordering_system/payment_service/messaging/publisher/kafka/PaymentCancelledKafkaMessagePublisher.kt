@@ -27,7 +27,7 @@ class PaymentCancelledKafkaMessagePublisher(
         try {
             val paymentResponseAvroModel = PaymentResponseAvroModel(
                 UUID.randomUUID(),
-                UUID.randomUUID(),
+                payment.orderId.value,  // 임시로
                 payment.id!!.value,
                 payment.customerId.value,
                 payment.orderId.value,

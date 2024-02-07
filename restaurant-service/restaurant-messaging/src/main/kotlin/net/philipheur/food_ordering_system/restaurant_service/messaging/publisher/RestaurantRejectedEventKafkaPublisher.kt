@@ -7,11 +7,14 @@ import net.philipheur.food_ordering_system.infrastructure.kafka.producer.service
 import net.philipheur.food_ordering_system.restaurant_service.domain.core.event.OrderRejectedEvent
 import net.philipheur.food_ordering_system.restaurant_service.domain.service.config.RestaurantServiceConfigData
 import net.philipheur.food_ordering_system.restaurant_service.domain.service.ports.output.publisher.OrderRejectedMessagePublisher
+import org.springframework.stereotype.Component
 import java.util.*
 
+@Component
 class RestaurantRejectedEventKafkaPublisher(
-    private val restaurantServiceConfigData: RestaurantServiceConfigData,
-    private val kafkaProducer: KafkaProducer<String, RestaurantApprovalResponseAvroModel>
+    private val configData: RestaurantServiceConfigData,
+    private val kafkaProducer:
+    KafkaProducer<String, RestaurantApprovalResponseAvroModel>
 ) : OrderRejectedMessagePublisher {
 
     private val log by LoggerDelegator()
@@ -25,16 +28,18 @@ class RestaurantRejectedEventKafkaPublisher(
         try {
             val model = RestaurantApprovalResponseAvroModel(
                 UUID.randomUUID(),
-                UUID.randomUUID(),
+                domainEvent.orderApproval.orderId.value,    // 임시로
                 orderId,
                 domainEvent.restaurantId.value,
                 domainEvent.createdAt.toInstant(),
-                OrderApprovalStatus.valueOf(domainEvent.orderApproval.orderApprovalStatus.name),
+                OrderApprovalStatus.valueOf(
+                    domainEvent.orderApproval.orderApprovalStatus.name
+                ),
                 domainEvent.failureMessages,
             )
 
             kafkaProducer.send(
-                topicName = restaurantServiceConfigData.restaurantResponseTopicName,
+                topicName = configData.restaurantApprovalResponseTopicName,
                 key = domainEvent.orderApproval.orderId.value.toString(),
                 message = model,
             ) { result, ex ->
@@ -53,7 +58,7 @@ class RestaurantRejectedEventKafkaPublisher(
                     log.error(
                         "Error while sending RestaurantApprovalResponseAvroModel" +
                                 " message $model " +
-                                "to topic ${restaurantServiceConfigData.restaurantResponseTopicName}",
+                                "to topic ${configData.restaurantApprovalResponseTopicName}",
                         ex
                     );
                 }

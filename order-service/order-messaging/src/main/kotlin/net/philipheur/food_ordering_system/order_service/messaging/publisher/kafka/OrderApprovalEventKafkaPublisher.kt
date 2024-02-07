@@ -98,7 +98,7 @@ class OrderApprovalEventKafkaPublisher(
 
             log.info(
                 "RestaurantApprovalRequestAvroModel sent to Kafka " +
-                        "for order id: ${payload.orderId} and" +
+                        "for order id: ${payload.orderId} and " +
                         "saga id: $sagaId"
             )
         } catch (ex: Exception) {
