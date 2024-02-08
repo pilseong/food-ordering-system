@@ -3,9 +3,10 @@ package net.philipheur.food_ordering_system.order_service.domain.application_ser
 import net.philipheur.food_ordering_system.common.domain.valueobject.PaymentStatus
 import java.math.BigDecimal
 import java.time.Instant
-import java.util.UUID
+import java.util.*
 
 
+// payment 서비스로 부터 수신하는 결재 정보
 data class PaymentResponse(
     val id: UUID,
     val sagaId: UUID,

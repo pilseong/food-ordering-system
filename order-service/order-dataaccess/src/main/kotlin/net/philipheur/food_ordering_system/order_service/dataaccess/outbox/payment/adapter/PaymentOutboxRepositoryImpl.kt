@@ -1,12 +1,11 @@
 package net.philipheur.food_ordering_system.order_service.dataaccess.outbox.payment.adapter
 
+import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
 import net.philipheur.food_ordering_system.infrastructure.saga.SagaStatus
-import net.philipheur.food_ordering_system.order_service.dataaccess.outbox.payment.exception.PaymentOutboxNotFoundException
 import net.philipheur.food_ordering_system.order_service.dataaccess.outbox.payment.mapper.PaymentOutboxTypeMapper
 import net.philipheur.food_ordering_system.order_service.dataaccess.outbox.payment.repository.PaymentOutboxJpaRepository
 import net.philipheur.food_ordering_system.order_service.domain.application_service.outbox.model.payment.OrderPaymentOutboxMessage
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.PaymentOutboxRepository
-import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -18,7 +17,6 @@ class PaymentOutboxRepositoryImpl(
     override fun save(
         orderPaymentOutboxMessage: OrderPaymentOutboxMessage
     ): OrderPaymentOutboxMessage {
-
         val entity = paymentOutboxJpaRepository.save(
             mapper.orderPaymentOutboxMessageToEntity(
                 orderPaymentOutboxMessage
@@ -40,12 +38,12 @@ class PaymentOutboxRepositoryImpl(
                 sagaStatus = sagaStatus.toList()
             )
 
-        if (entities == null) {
-            throw PaymentOutboxNotFoundException(
-                "Payment outbox object could not be found " +
-                        "for saga type $type"
-            )
-        }
+//        if (entities == null) {
+//            throw PaymentOutboxNotFoundException(
+//                "Payment outbox object could not be found " +
+//                        "for saga type $type"
+//            )
+//        }
 
         return entities.map {
             mapper.paymentOutboxEntityToMessage(it)

@@ -28,8 +28,7 @@ class RestaurantApprovalResponseMessageListenerImpl(
     override fun orderRejected(
         response: RestaurantApprovalResponse
     ) {
-//        val orderCancelledEvent = orderApprovalSaga
-//            .rollback(response)
+        orderApprovalSaga.rollback(response)
         log.error(
             "Order id ${response.orderId} is roll backed " +
                     "with failure messages ${response.failureMessages}"

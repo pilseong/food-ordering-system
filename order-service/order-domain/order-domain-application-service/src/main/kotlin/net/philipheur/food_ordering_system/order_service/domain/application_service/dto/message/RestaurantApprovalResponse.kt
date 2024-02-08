@@ -4,6 +4,7 @@ import net.philipheur.food_ordering_system.common.domain.valueobject.OrderApprov
 import java.time.Instant
 import java.util.*
 
+// 식당에서 부터 수신 받는 주문 수락 정보
 data class RestaurantApprovalResponse(
     val id: UUID,
     val sagaId: UUID,

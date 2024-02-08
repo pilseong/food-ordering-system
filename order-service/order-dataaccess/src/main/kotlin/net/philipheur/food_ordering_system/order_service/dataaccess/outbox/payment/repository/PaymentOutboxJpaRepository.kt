@@ -12,7 +12,7 @@ interface PaymentOutboxJpaRepository: JpaRepository<PaymentOutboxEntity, UUID> {
         type: String,
         outboxStatus: OutboxStatus,
         sagaStatus: List<SagaStatus>
-    ): List<PaymentOutboxEntity>?
+    ): List<PaymentOutboxEntity>
 
     fun findByTypeAndSagaIdAndSagaStatusIn(
         type: String,

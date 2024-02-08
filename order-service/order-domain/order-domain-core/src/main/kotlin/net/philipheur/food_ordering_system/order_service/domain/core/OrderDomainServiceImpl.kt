@@ -60,12 +60,12 @@ class OrderDomainServiceImpl : OrderDomainService {
 
     override fun cancelOrder(order: Order, failureMessages: List<String>) {
         order.cancel(failureMessages)
-        log.info("Order with id: ${order.id} is cancelled")
+        log.info("Order with id: ${order.id!!.value} is cancelled")
     }
 
     override fun approveOrder(order: Order) {
         order.approve()
-        log.info("Order with id: ${order.id} is approved")
+        log.info("Order with id: ${order.id!!.value} is approved")
     }
 
     override fun cancelOrderPayment(

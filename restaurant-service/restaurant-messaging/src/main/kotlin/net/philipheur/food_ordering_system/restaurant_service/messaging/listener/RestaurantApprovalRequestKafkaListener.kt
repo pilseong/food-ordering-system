@@ -17,7 +17,7 @@ import java.util.*
 
 @Component
 class RestaurantApprovalRequestKafkaListener(
-    private val requestMessageListener:
+    private val messageListener:
     RestaurantApprovalRequestMessageListener,
 ) : KafkaConsumer<RestaurantApprovalRequestAvroModel> {
 
@@ -48,7 +48,7 @@ class RestaurantApprovalRequestKafkaListener(
                         "for order id: ${model.orderId}"
             )
             // 비즈니스 로직으로 메시지 전달
-            requestMessageListener
+            messageListener
                 .approveOrder(
                     modelToMessage(model)
                 )
@@ -59,7 +59,7 @@ class RestaurantApprovalRequestKafkaListener(
         model: RestaurantApprovalRequestAvroModel
     ) = RestaurantApprovalRequest(
         id = model.id,
-        sageId = model.sagaId,
+        sagaId = model.sagaId,
         restaurantId = model.restaurantId,
         orderId = model.orderId,
         restaurantOrderStatus = RestaurantOrderStatus

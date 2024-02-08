@@ -16,26 +16,13 @@ class PaymentRequestMessageListenerImpl(
     override fun completePayment(paymentRequest: PaymentRequest) {
 
         // 지불 처리
-        val paymentEvent = paymentRequestHelper
-            .persistPayment(paymentRequest)
-
-        log.info("Publishing payment event with " +
-                "payment id: ${paymentEvent.payment.id!!.value} and " +
-                "order id: ${paymentEvent.payment.orderId.value}")
-
-        // 수시한 결과를 카프카로 발송한다.
-        paymentEvent.fire()
+        paymentRequestHelper.persistPayment(paymentRequest)
     }
 
     // 취소 이벤트 처리
     override fun cancelPayment(paymentRequest: PaymentRequest) {
-        val paymentEvent = paymentRequestHelper
-            .persistCancelPayment(paymentRequest)
 
-        log.info("Publishing payment event with " +
-                "payment id: ${paymentEvent.payment.id!!.value} and " +
-                "order id: ${paymentEvent.payment.orderId.value}")
-
-        paymentEvent.fire()
+        // 지불 취소
+        paymentRequestHelper.persistCancelPayment(paymentRequest)
     }
 }

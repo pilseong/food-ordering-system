@@ -2,6 +2,7 @@ package net.philipheur.food_ordering_system.order_service.domain.application_ser
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
+import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
 import net.philipheur.food_ordering_system.infrastructure.saga.SagaStatus
 import net.philipheur.food_ordering_system.infrastructure.saga.order.SagaConstants.Companion.ORDER_SAGA_NAME
@@ -9,19 +10,16 @@ import net.philipheur.food_ordering_system.order_service.domain.application_serv
 import net.philipheur.food_ordering_system.order_service.domain.application_service.outbox.model.payment.OrderPaymentOutboxMessage
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.PaymentOutboxRepository
 import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
-
-inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
 
 @Component
 open class PaymentOutboxHelper(
     private val paymentOutboxRepository: PaymentOutboxRepository,
     private val objectMapper: ObjectMapper
 ) {
-    private val log = logger()
+    private val log by LoggerDelegator()
 
     @Transactional(readOnly = true)
     open fun getPaymentOutboxMessageByOutboxStatusAndSagaStatus(

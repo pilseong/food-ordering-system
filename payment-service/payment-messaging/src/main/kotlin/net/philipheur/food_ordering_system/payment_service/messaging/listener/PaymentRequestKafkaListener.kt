@@ -58,7 +58,7 @@ class PaymentRequestKafkaListener(
         paymentRequestAvroModel: PaymentRequestAvroModel
     ) = PaymentRequest(
         id = paymentRequestAvroModel.id,
-        sageId = paymentRequestAvroModel.sagaId,
+        sagaId = paymentRequestAvroModel.sagaId,
         orderId = paymentRequestAvroModel.orderId,
         customerId = paymentRequestAvroModel.customerId,
         price = paymentRequestAvroModel.price,

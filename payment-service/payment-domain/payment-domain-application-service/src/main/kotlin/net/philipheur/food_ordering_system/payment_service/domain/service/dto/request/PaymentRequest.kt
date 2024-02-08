@@ -7,7 +7,7 @@ import java.util.*
 
 data class PaymentRequest(
     val id: UUID,
-    val sageId: UUID,
+    val sagaId: UUID,
     val orderId: UUID,
     val customerId: UUID,
     val price: BigDecimal,

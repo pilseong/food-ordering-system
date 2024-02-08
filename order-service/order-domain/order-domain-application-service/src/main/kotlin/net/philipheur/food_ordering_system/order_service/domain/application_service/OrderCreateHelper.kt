@@ -63,8 +63,7 @@ open class OrderCreateHelper(
         paymentOutboxHelper.saveOutboxMessage(
             OrderPaymentOutboxMessage(
                 id = UUID.randomUUID(),
-//                sagaId = UUID.randomUUID(),
-                sagaId = event.order.id!!.value,    // 임시로
+                sagaId = UUID.randomUUID(),
                 createdAt = event.createdAt,
                 type = SagaConstants.ORDER_SAGA_NAME,
                 payload = resultPayload,

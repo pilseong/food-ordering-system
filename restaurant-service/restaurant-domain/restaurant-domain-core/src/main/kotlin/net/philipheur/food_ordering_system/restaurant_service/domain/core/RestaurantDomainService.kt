@@ -12,5 +12,5 @@ interface RestaurantDomainService {
         failureMessages: MutableList<String>,
         orderApprovedEventDomainEventPublisher: DomainEventPublisher<OrderApprovedEvent>,
         orderRejectedEventDomainEventPublisher: DomainEventPublisher<OrderRejectedEvent>
-    ): OrderApprovalEvent?
+    ): OrderApprovalEvent
 }

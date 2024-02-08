@@ -8,6 +8,8 @@ logging:
 restaurant-service:
   restaurant-approval-request-topic-name: restaurant-approval-request
   restaurant-approval-response-topic-name: restaurant-approval-response
+  outbox-scheduler-fixed-rate: 5000
+  outbox-scheduler-initial-delay: 5000
 
 spring:
   jpa:

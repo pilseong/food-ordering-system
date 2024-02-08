@@ -20,7 +20,7 @@ class Restaurant(
         if (orderDetail.orderStatus != OrderStatus.PAID) {
             failureMessages.add(
                 "Payment is not completed " +
-                        "for order id: ${orderDetail.id}"
+                        "for order id: ${orderDetail.id!!.value}"
             )
         }
 
@@ -28,7 +28,7 @@ class Restaurant(
         val totalAmount = orderDetail.products.map {
             if (!it.available!!) {
                 failureMessages.add(
-                    "Product with id: ${it.id} is not available"
+                    "Product with id: ${it.id!!.value} is not available"
                 )
             }
             it.price!!.multiply(it.quantity!!)
@@ -40,7 +40,7 @@ class Restaurant(
         if (totalAmount != orderDetail.totalAmount) {
             failureMessages.add(
                 "Price total is not correct for " +
-                        "oder id: ${orderDetail.id}"
+                        "oder id: ${orderDetail.id!!.value}"
             )
         }
     }

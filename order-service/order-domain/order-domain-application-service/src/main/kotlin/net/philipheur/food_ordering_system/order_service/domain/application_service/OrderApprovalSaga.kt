@@ -39,9 +39,7 @@ open class OrderApprovalSaga(
 
     // 식당 결과가 진행이면 더 이상 saga 가 진행할 것이 없다. 처리 후 종결
     @Transactional
-    override fun process(
-        data: RestaurantApprovalResponse
-    ) {
+    override fun process(data: RestaurantApprovalResponse) {
         /* 1. 해당 sagaId와 saga 상태로 outbox 메시지를 검색 <시작> */
         var orderApprovalOutboxMessage = approvalOutboxHelper
             .getApprovalOutboxMessageBySagaIdAndSagaStatus(
@@ -116,7 +114,7 @@ open class OrderApprovalSaga(
 
 
         /* 3. 비즈니스 로직 결과에 따른 approval outbox 메시지 업데이트 <시작> */
-        // saga 상태 수정 -> COMPENSATING
+        // order 상태 -> PAID -> CANCELLING / saga 상태 수정 -> PROCESSING -> COMPENSATING
         val sagaStatus = orderSagaHelper
             .orderStatusToSagaStatus(orderCancelledEvent.order.orderStatus)
 
@@ -127,6 +125,7 @@ open class OrderApprovalSaga(
         )
 
         // approval outbox 메시지 저장
+        // saga 상태 -> COMPENSATING, order 상태 -> CANCELLING
         approvalOutboxHelper.saveOutboxMessage(orderApprovalOutboxMessage)
         /* 비즈니스 로직 결과에 따른 approval outbox 메시지 업데이트 <종료> */
 
@@ -154,7 +153,7 @@ open class OrderApprovalSaga(
         // order payment outbox 메시지 생성
         // outbox DB에 payload 로 저장할 메시지 객체 생성
         val payload = OrderPaymentEventPayload(
-            orderId = event.order.id.toString(),
+            orderId = event.order.id!!.value.toString(),
             customerId = event.order.customerId.value.toString(),
             price = event.order.price.amount,
             createdAt = event.createdAt,
@@ -162,6 +161,7 @@ open class OrderApprovalSaga(
         )
 
         // payment outbox 에 저장
+        // order 상태 -> CANCELLING / saga 상태 -> COMPENSATING
         paymentOutboxHelper.saveOutboxMessage(
             OrderPaymentOutboxMessage(
                 id = UUID.randomUUID(),

@@ -7,6 +7,7 @@ import net.philipheur.food_ordering_system.common.domain.valueobject.RestaurantI
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.RestaurantRepository
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Product
 import net.philipheur.food_ordering_system.order_service.domain.core.entity.Restaurant
+import net.philipheur.food_ordering_system.order_service.domain.core.exception.OrderDomainException
 import org.springframework.stereotype.Component
 
 @Component
@@ -22,6 +23,12 @@ open class RestaurantRepositoryImpl(
                 restaurantId = restaurant.id!!.value,
                 productIds = productIds
             )
+
+        if (restaurantEntities.isEmpty()) {
+            throw OrderDomainException("the restaurant with" +
+                    " id ${restaurant.id!!.value} and " +
+                    "products id with $productIds cannot be found")
+        }
 
         return Restaurant(
             restaurantId = RestaurantId(restaurantEntities[0].restaurantId),

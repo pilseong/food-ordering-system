@@ -13,6 +13,8 @@ import net.philipheur.food_ordering_system.order_service.domain.core.valueobject
 import org.springframework.stereotype.Component
 import java.util.*
 
+// 타입 변환을 위한 클래스
+// 웬만큼 복잡하지 않는 한에는 추가하지 않는다. 바로 생성하는 것이 가독성이 높다.
 @Component
 open class OrderTypeMapper {
 

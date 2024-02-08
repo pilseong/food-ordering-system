@@ -8,7 +8,7 @@ import java.util.*
 
 data class RestaurantApprovalRequest(
     val id: UUID,
-    val sageId: UUID,
+    val sagaId: UUID,
     val restaurantId: UUID,
     val orderId: UUID,
     val restaurantOrderStatus: RestaurantOrderStatus,

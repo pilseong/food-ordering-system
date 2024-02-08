@@ -13,6 +13,6 @@ class RestaurantApprovalRequestMessageListenerImpl(
             .persistOrderApproval(restaurantApprovalRequest)
 
         // 결과를 발송한다.
-        orderApprovalEvent.fire()
+//        orderApprovalEvent.fire()
     }
 }
