@@ -17,7 +17,6 @@ interface PaymentDomainService {
         failureMessages: MutableList<String>,
         paymentCompletedMessagePublisher: DomainEventPublisher<PaymentCompletedEvent>,
         paymentFailedMessagePublisher: DomainEventPublisher<PaymentFailedEvent>
-
     ): PaymentEvent
 
     fun validateAndCancelPayment(

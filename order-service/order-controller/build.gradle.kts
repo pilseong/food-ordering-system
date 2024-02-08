@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+    api(project(":common-controller"))
     api(project(":order-domain-application-service"))
     api("org.springframework.boot:spring-boot-starter-web:3.2.2")
 }

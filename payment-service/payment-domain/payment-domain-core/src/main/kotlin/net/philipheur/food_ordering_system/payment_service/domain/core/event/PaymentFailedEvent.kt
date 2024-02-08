@@ -9,4 +9,8 @@ class PaymentFailedEvent(
     createdAt: ZonedDateTime,
     failureMessages: MutableList<String>,
     val paymentFailedMessagePublisher: DomainEventPublisher<PaymentFailedEvent>
-) : PaymentEvent(payment, createdAt, failureMessages)
+) : PaymentEvent(payment, createdAt, failureMessages) {
+    override fun fire() {
+        paymentFailedMessagePublisher.publish(this)
+    }
+}

@@ -17,7 +17,7 @@ class PaymentRequestMessageListenerImpl(
 
         // 지불 처리
         val paymentEvent = paymentRequestHelper
-            .persisPayment(paymentRequest)
+            .persistPayment(paymentRequest)
 
         log.info("Publishing payment event with " +
                 "payment id: ${paymentEvent.payment.id!!.value} and " +

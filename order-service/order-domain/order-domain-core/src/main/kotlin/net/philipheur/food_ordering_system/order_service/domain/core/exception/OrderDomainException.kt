@@ -4,10 +4,10 @@ import net.philipheur.food_ordering_system.common.domain.exception.DomainExcepti
 
 class OrderDomainException : DomainException {
     constructor(
-        message: String?
+        message: String
     ) : super(message)
 
     constructor(
-        message: String?, cause: Throwable?
+        message: String, cause: Throwable
     ) : super(message, cause)
 }

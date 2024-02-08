@@ -2,18 +2,18 @@ package net.philipheur.food_ordering_system.common.controller
 
 import jakarta.validation.ConstraintViolationException
 import jakarta.validation.ValidationException
-import org.slf4j.LoggerFactory
+import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
 
-inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
 
 @ControllerAdvice
-class GlobalExceptionHandler {
-    private val log = logger()
+open class GlobalExceptionHandler {
+
+    protected val log by LoggerDelegator()
 
     @ResponseBody
     @ExceptionHandler(value = [Exception::class])

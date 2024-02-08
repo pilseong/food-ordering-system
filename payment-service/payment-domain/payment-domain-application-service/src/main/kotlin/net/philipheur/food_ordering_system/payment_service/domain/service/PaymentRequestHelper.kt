@@ -37,7 +37,7 @@ open class PaymentRequestHelper(
     private val log by LoggerDelegator()
 
     @Transactional
-    open fun persisPayment(
+    open fun persistPayment(
         paymentRequest: PaymentRequest
     ): PaymentEvent {
 

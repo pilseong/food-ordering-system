@@ -80,11 +80,11 @@ open class PaymentOutboxHelper(
         try {
             return objectMapper.writeValueAsString(orderPaymentEventPayload)
         } catch (e: JsonProcessingException) {
-//            log.error(
-//                "Could not create OrderPaymentEventPayload for " +
-//                        "order id: ${orderPaymentEventPayload.orderId}",
-//                e
-//            )
+            log.error(
+                "Could not create OrderPaymentEventPayload for " +
+                        "order id: ${orderPaymentEventPayload.orderId}",
+                e
+            )
             throw OrderDomainException(
                 "Could not create OrderPaymentEventPayload for " +
                         "order id: ${orderPaymentEventPayload.orderId}",
