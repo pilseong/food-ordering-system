@@ -171,7 +171,7 @@ open class OrderApprovalSaga(
                 payload = paymentOutboxHelper.createPayload(payload),
                 orderStatus = event.order.orderStatus!!,
                 sagaStatus = sagaStatus,
-                outboxStatus = OutboxStatus.STARTED
+                outboxStatus = OutboxStatus.STARTED // outbox 메시지는 생성 시에 STARTED 상태이다.
             )
         )
     }

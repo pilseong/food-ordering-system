@@ -26,7 +26,7 @@ class KafkaProducerImpl<ID : Serializable, MSG : SpecificRecordBase>(
         message: MSG,
         callback: BiConsumer<SendResult<ID, MSG>?, Throwable?>
     ) {
-        log.info("Sending message={} to topic={}", message, topicName)
+        log.info("Sending to topic={}. message={} ", message, topicName)
 
         try {
             // 메시지 발신

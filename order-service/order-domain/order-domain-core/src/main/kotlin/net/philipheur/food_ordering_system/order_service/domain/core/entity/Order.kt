@@ -129,7 +129,7 @@ class Order(
     private fun validateOrderItemPrice(it: OrderItem) {
         if (!it.isPriceValid()) {
             throw OrderDomainException(
-                "Order item price: ${it.price.amount} or subtotal ${it.subTotal} " +
+                "Order item price: ${it.price.amount} or subtotal ${it.subTotal.amount} " +
                         "is not valid " +
                         "for product ${it.product.id!!.value}"
             )

@@ -12,6 +12,8 @@ dependencies {
     api(project(":order-domain-core"))
     api(project(":order-messaging"))
     api(project(":kafka-config-data"))
+
+    api("org.springframework.boot:spring-boot-starter-test:3.2.2")
     api("org.springframework.boot:spring-boot-starter:3.2.2")
 }
 

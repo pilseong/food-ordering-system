@@ -2,8 +2,8 @@ package net.philipheur.food_ordering_system.order_service.dataaccess.outbox.paym
 
 import jakarta.persistence.*
 import net.philipheur.food_ordering_system.common.domain.valueobject.OrderStatus
-import net.philipheur.food_ordering_system.infrastructure.saga.SagaStatus
 import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
+import net.philipheur.food_ordering_system.infrastructure.saga.SagaStatus
 import java.time.ZonedDateTime
 import java.util.*
 
@@ -15,7 +15,7 @@ class PaymentOutboxEntity(
 
     val sagaId: UUID,
     val createdAt: ZonedDateTime,
-    val processedAt: ZonedDateTime,
+    val processedAt: ZonedDateTime?,
     val type: String,
     val payload: String,
 

@@ -28,11 +28,13 @@ class RestaurantApprovalResponseMessageListenerImpl(
     override fun orderRejected(
         response: RestaurantApprovalResponse
     ) {
+        log.error(
+            "Order with id: ${response.orderId} has been rejected from restaurant"
+        )
         orderApprovalSaga.rollback(response)
         log.error(
-            "Order id ${response.orderId} is roll backed " +
+            "Order with id: ${response.orderId} is rolling backed " +
                     "with failure messages ${response.failureMessages}"
         )
-//        orderCancelledEvent.fire()
     }
 }

@@ -87,14 +87,13 @@ open class OrderPaymentSaga(
             paymentResponse = data,
             sagaStatus = sagaStatus
         )
-
-        log.info("Order with id: ${orderPaidEvent.order.id!!.value} is paid");
     }
 
     @Transactional
     override fun rollback(data: PaymentResponse) {
 
-        // 둘 중에 하나인 상태가 있을 수 있다. CANCELLED OR FAILED
+        // 둘 중에 하나인 상태가 있을 수 있다. payment 상태 -> CANCELLED / FAILED
+        // CANCELLED -> saga 상태 -> PROCESSING 상태의 것을 검색
         var orderPaymentOutboxMessage = paymentOutboxHelper
             .getPaymentOutboxMessageBySagaIdAndSagaStatus(
                 sagaId = data.sagaId,

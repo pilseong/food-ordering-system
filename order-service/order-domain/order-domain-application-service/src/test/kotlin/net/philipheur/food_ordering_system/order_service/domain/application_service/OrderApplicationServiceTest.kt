@@ -1,10 +1,16 @@
 package net.philipheur.food_ordering_system.order_service.domain.application_service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import net.philipheur.food_ordering_system.common.domain.valueobject.*
+import net.philipheur.food_ordering_system.infrastructure.outbox.OutboxStatus
+import net.philipheur.food_ordering_system.infrastructure.saga.SagaStatus
+import net.philipheur.food_ordering_system.infrastructure.saga.order.SagaConstants.Companion.ORDER_SAGA_NAME
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.CreateOrderCommand
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.DeliveryAddressDto
 import net.philipheur.food_ordering_system.order_service.domain.application_service.dto.create.OrderItemDto
 import net.philipheur.food_ordering_system.order_service.domain.application_service.mapper.OrderTypeMapper
+import net.philipheur.food_ordering_system.order_service.domain.application_service.outbox.model.payment.OrderPaymentEventPayload
+import net.philipheur.food_ordering_system.order_service.domain.application_service.outbox.model.payment.OrderPaymentOutboxMessage
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.input.service.OrderApplicationService
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.CustomerRepository
 import net.philipheur.food_ordering_system.order_service.domain.application_service.ports.output.repository.OrderRepository
@@ -20,11 +26,12 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertThrows
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.kotlin.any
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import java.math.BigDecimal
+import java.time.ZonedDateTime
 import java.util.*
 
 
@@ -51,7 +58,7 @@ class OrderApplicationServiceTest {
     private lateinit var paymentOutboxRepository: PaymentOutboxRepository
 
     @Autowired
-    private lateinit var objectMapper: OrderTypeMapper
+    private lateinit var objectMapper: ObjectMapper
 
     private var createOrderCommand: CreateOrderCommand? = null
     private var createOrderCommandWrongPrice: CreateOrderCommand? = null
@@ -171,18 +178,48 @@ class OrderApplicationServiceTest {
             .createOrderCommandToOrder(createOrderCommand!!)
         order.id = OrderId(ORDER_ID)
 
-        Mockito.`when`(customerRepository.findCustomer(CUSTOMER_ID))
+        `when`(customerRepository.findCustomer(CUSTOMER_ID))
             .thenReturn(customer)
 
-        Mockito.`when`(
+        `when`(
             restaurantRepository.fetchRestaurantInformation(
                 orderTypeMapper.createOrderCommandToRestaurant(createOrderCommand!!)
             )
         )
             .thenReturn(restaurantResponse)
 
-        Mockito.`when`(orderRepository.save(any()))
+        `when`(orderRepository.save(any()))
             .thenReturn(order)
+
+        `when`(paymentOutboxRepository.save(any()))
+            .thenReturn(getOrderPaymentOutboxMessage())
+    }
+
+    private fun getOrderPaymentOutboxMessage(): OrderPaymentOutboxMessage {
+        val payload = OrderPaymentEventPayload(
+            orderId = ORDER_ID.toString(),
+            customerId = CUSTOMER_ID.toString(),
+            price = PRICE,
+            createdAt = ZonedDateTime.now(),
+            paymentOrderStatus = PaymentOrderStatus.PENDING.name,
+        )
+        return OrderPaymentOutboxMessage(
+            id = UUID.randomUUID(),
+            sagaId = SAGA_ID,
+            createdAt = ZonedDateTime.now(),
+            type = ORDER_SAGA_NAME,
+            payload = createPayload(payload),
+            orderStatus = OrderStatus.PENDING,
+            sagaStatus = SagaStatus.STARTED,
+            outboxStatus = OutboxStatus.STARTED,
+            version = 0
+        )
+    }
+
+    private fun createPayload(
+        orderPaymentEventPayload: OrderPaymentEventPayload
+    ): String {
+        return objectMapper.writeValueAsString(orderPaymentEventPayload)
     }
 
     @Test
@@ -196,6 +233,20 @@ class OrderApplicationServiceTest {
     }
 
     @Test
+    fun testCreateOrderWithWrongTotalPrice() {
+        val orderDomainException = assertThrows<OrderDomainException> {
+            orderApplicationService.createOrder(
+                createOrderCommandWrongPrice!!
+            )
+        }
+
+        assertEquals(
+            "Total price: 250.00 is not equal to Order items total: 200.00",
+            orderDomainException.message
+        )
+    }
+
+    @Test
     fun testCreateOrderWithWrongProductPrice() {
         val orderDomainException = assertThrows<OrderDomainException> {
             orderApplicationService.createOrder(
@@ -204,7 +255,7 @@ class OrderApplicationServiceTest {
         }
 
         assertEquals(
-            "Order item price: 60.00 is not valid for product $PRODUCT_ID",
+            "Order item price: 60.00 or subtotal 60.00 is not valid for product $PRODUCT_ID",
             orderDomainException.message
         )
     }
@@ -214,7 +265,7 @@ class OrderApplicationServiceTest {
         restaurantResponse!!.active = false
 
 
-        Mockito.`when`(
+        `when`(
             restaurantRepository.fetchRestaurantInformation(
                 orderTypeMapper.createOrderCommandToRestaurant(
                     createOrderCommand!!

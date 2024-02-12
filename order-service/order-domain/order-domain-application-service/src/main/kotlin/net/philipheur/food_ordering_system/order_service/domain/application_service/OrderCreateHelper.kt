@@ -43,11 +43,6 @@ open class OrderCreateHelper(
         // 고객 요청 데이터로 주문 객체 생성
         val event = persistOrder(createOrderCommand)
 
-        log.info(
-            "Order is created with " +
-                    "id: ${event.order.id!!.value}"
-        )
-
         // outbox DB에 payload 로 저장할 메시지 객체 생성
         val payload = OrderPaymentEventPayload(
             orderId = event.order.id!!.value.toString(),
