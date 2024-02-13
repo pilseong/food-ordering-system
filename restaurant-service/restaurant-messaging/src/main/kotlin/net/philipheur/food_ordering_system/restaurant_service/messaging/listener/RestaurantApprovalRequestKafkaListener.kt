@@ -66,7 +66,7 @@ class RestaurantApprovalRequestKafkaListener(
             .valueOf(model.restaurantOrderStatus.name),
         products = model.products.map {
             Product(
-                productId = ProductId(UUID.fromString(it.id)),
+                productId = ProductId(UUID.fromString(it.id.toString())),
                 quantity = it.quantity,
             )
         },

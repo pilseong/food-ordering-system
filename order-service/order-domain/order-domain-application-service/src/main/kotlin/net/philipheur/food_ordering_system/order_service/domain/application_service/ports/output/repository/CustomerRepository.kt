@@ -6,4 +6,6 @@ import java.util.*
 
 interface CustomerRepository {
     fun findCustomer(customerId: UUID): Customer?
+
+    fun save(customer: Customer): Customer
 }

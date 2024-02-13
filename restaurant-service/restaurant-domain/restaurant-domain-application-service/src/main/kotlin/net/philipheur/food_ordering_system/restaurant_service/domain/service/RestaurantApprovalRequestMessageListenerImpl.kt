@@ -9,10 +9,7 @@ class RestaurantApprovalRequestMessageListenerImpl(
     private val restaurantApprovalRequestHelper: RestaurantApprovalRequestHelper
 ) : RestaurantApprovalRequestMessageListener {
     override fun approveOrder(restaurantApprovalRequest: RestaurantApprovalRequest) {
-        val orderApprovalEvent = restaurantApprovalRequestHelper
+        restaurantApprovalRequestHelper
             .persistOrderApproval(restaurantApprovalRequest)
-
-        // 결과를 발송한다.
-//        orderApprovalEvent.fire()
     }
 }

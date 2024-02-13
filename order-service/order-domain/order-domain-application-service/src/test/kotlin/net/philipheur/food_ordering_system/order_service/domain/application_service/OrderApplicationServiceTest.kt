@@ -154,7 +154,10 @@ class OrderApplicationServiceTest {
             )
 
         val customer = Customer(
-            customerId = CustomerId(CUSTOMER_ID)
+            customerId = CustomerId(CUSTOMER_ID),
+            username = "test1",
+            firstName = "test",
+            lastName = "one"
         )
 
         restaurantResponse = Restaurant(

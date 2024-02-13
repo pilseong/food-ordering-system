@@ -48,7 +48,7 @@ class OrderApprovalEventKafkaPublisher(
                     .valueOf(orderApprovalOutboxMessage.orderStatus.name),
                 payload.products.map {
                     Product(
-                        it.id,
+                        UUID.fromString(it.id),
                         it.quantity
                     )
                 },

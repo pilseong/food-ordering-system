@@ -3,12 +3,15 @@ package net.philipheur.food_ordering_system.order_service.dataaccess.customer.en
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import java.util.UUID
+import java.util.*
 
 @Entity
-@Table(name = "order_customer_m_view", schema = "customer")
+@Table(name = "customers")
 class CustomerEntity(
     @Id
-    var id: UUID
-) {
-}
+    var id: UUID,
+
+    var username: String,
+    var firstName: String,
+    var lastName: String
+)

@@ -36,19 +36,30 @@
       "type": {
         "type": "enum",
         "name": "RestaurantOrderStatus",
-        "symbols": ["PAID"]
+        "symbols": [
+          "PAID"
+        ]
       }
     },
     {
       "name": "products",
       "type": {
         "type": "array",
-        "items":{
-          "name":"Product",
-          "type":"record",
-          "fields":[
-            {"name":"id", "type": "string", "logicalType": "uuid"},
-            {"name":"quantity", "type": "int"}
+        "items": {
+          "name": "Product",
+          "type": "record",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "type": "string",
+                "logicalType": "uuid"
+              }
+            },
+            {
+              "name": "quantity",
+              "type": "int"
+            }
           ]
         }
       }

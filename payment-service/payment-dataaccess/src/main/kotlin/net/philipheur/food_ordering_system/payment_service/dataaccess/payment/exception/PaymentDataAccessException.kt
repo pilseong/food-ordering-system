@@ -2,5 +2,4 @@ package net.philipheur.food_ordering_system.payment_service.dataaccess.payment.e
 
 class PaymentDataAccessException(
     message: String
-): RuntimeException(message) {
-}
+): RuntimeException(message)

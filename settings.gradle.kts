@@ -15,7 +15,13 @@ include(":common-domain")
 include(":common-controller")
 include(":common-utils")
 include(":common-dataaccess")
-include(":customer-service")
+
+include(":customer-domain-core")
+include(":customer-domain-application-service")
+include(":customer-dataaccess")
+include(":customer-messaging")
+include(":customer-controller")
+include(":customer-app")
 
 include(":order-domain-core")
 include(":order-domain-application-service")
@@ -46,7 +52,6 @@ include(":saga")
 include(":outbox")
 
 
-
 project(":common-domain").projectDir =
     file("common/common-domain")
 project(":common-controller").projectDir =
@@ -56,8 +61,18 @@ project(":common-utils").projectDir =
 project(":common-dataaccess").projectDir =
     file("common/common-dataaccess")
 
-project(":customer-service").projectDir =
-    file("customer-service")
+project(":customer-domain-core").projectDir =
+    file("customer-service/customer-domain/customer-domain-core")
+project(":customer-domain-application-service").projectDir =
+    file("customer-service/customer-domain/customer-domain-application-service")
+project(":customer-dataaccess").projectDir =
+    file("customer-service/customer-dataaccess")
+project(":customer-messaging").projectDir =
+    file("customer-service/customer-messaging")
+project(":customer-controller").projectDir =
+    file("customer-service/customer-controller")
+project(":customer-app").projectDir =
+    file("customer-service/customer-app")
 
 project(":order-domain-core").projectDir =
     file("order-service/order-domain/order-domain-core")
