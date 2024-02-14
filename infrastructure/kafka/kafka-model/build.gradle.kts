@@ -1,9 +1,8 @@
-import com.github.davidmc24.gradle.plugin.avro.GenerateAvroJavaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+apply<LibraryConventionsPlugin>()
 
 plugins {
-    id("net.pilseong.food_ordering_system.kotlin-library-conventions")
     id("com.github.davidmc24.gradle.plugin.avro") version "1.9.1"
 }
 

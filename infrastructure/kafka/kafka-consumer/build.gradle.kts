@@ -1,12 +1,10 @@
 
-plugins {
-    id("net.pilseong.food_ordering_system.kotlin-library-conventions")
-}
+apply<LibraryConventionsPlugin>()
 
 dependencies {
     api(project(":kafka-config-data"))
-    api("org.springframework.kafka:spring-kafka:3.1.1")
-    api("io.confluent:kafka-avro-serializer:7.5.1")
+    api(Dependencies.SPRING_KAFKA)
+    api(Dependencies.KAFKA_AVRO_SERIALIZER)
 }
 
 description = "kafka-consumer"

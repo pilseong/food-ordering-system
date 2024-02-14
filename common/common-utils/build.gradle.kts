@@ -1,7 +1,5 @@
 
-plugins {
-    id("net.pilseong.food_ordering_system.kotlin-library-conventions")
-}
+apply<LibraryConventionsPlugin>()
 
 
 description = "common-utils"

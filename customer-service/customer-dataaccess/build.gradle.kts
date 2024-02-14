@@ -1,6 +1,11 @@
+import Dependencies.POSTGRESQL
+import Dependencies.SPRING_BOOT_STARTER_DATA_JPA
+import Dependencies.SPRING_TX
+
+apply<LibraryConventionsPlugin>()
+
 plugins {
-    id("net.pilseong.food_ordering_system.kotlin-library-conventions")
-    kotlin("plugin.jpa") version "1.9.22"
+    kotlin("plugin.jpa") version Versions.KOTLIN
 }
 
 dependencies {
@@ -8,9 +13,10 @@ dependencies {
     api(project(":outbox"))
     api(project(":customer-domain-application-service"))
     api(project(":common-dataaccess"))
-    api("org.springframework:spring-tx:6.1.2")
-    api("org.springframework.boot:spring-boot-starter-data-jpa:3.2.2")
-    api("org.postgresql:postgresql:42.6.0")
+
+    api(SPRING_TX)
+    api(SPRING_BOOT_STARTER_DATA_JPA)
+    api(POSTGRESQL)
 }
 
 description = "customer-dataaccess"

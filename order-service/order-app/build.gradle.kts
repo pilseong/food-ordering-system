@@ -1,8 +1,7 @@
 plugins {
     id("net.pilseong.food_ordering_system.kotlin-application-conventions")
+    id("org.springframework.boot") version Versions.SPRING_BOOT
 }
-
-
 dependencies {
     api(project(":common-controller"))
     api(project(":common-dataaccess"))
@@ -13,9 +12,10 @@ dependencies {
     api(project(":order-messaging"))
     api(project(":kafka-config-data"))
 
-    api("org.springframework.boot:spring-boot-starter-test:3.2.2")
-    api("org.springframework.boot:spring-boot-starter:3.2.2")
+    api(Dependencies.SPRING_BOOT_STARTER_TEST)
+    api(Dependencies.SPRING_BOOT_STARTER)
 }
+
 
 application {
     // Define the main class for the application.

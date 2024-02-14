@@ -1,7 +1,10 @@
 
 plugins {
     id("net.pilseong.food_ordering_system.kotlin-application-conventions")
+    id("org.springframework.boot") version Versions.SPRING_BOOT
 }
+
+apply<ApplicationConventionsPlugin>()
 
 dependencies {
     api(project(":common-controller"))
@@ -13,7 +16,7 @@ dependencies {
     api(project(":customer-messaging"))
     api(project(":kafka-config-data"))
 
-    api("org.springframework.boot:spring-boot-starter:3.2.2")
+    api(Dependencies.SPRING_BOOT_STARTER)
 }
 
 application {

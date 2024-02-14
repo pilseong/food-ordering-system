@@ -1,7 +1,4 @@
-
-plugins {
-    id("net.pilseong.food_ordering_system.kotlin-library-conventions")
-}
+apply<LibraryConventionsPlugin>()
 
 dependencies {
     api(project(":common-domain"))
