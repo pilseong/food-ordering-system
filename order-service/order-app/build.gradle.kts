@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 plugins {
     id("net.pilseong.food_ordering_system.kotlin-application-conventions")
     id("org.springframework.boot") version Versions.SPRING_BOOT
@@ -20,6 +22,10 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClass.set("net.philipheur.food_ordering_system.order_service.OrderServiceApplicationKt")
+}
+
+tasks.named<BootBuildImage>("bootBuildImage") {
+    imageName.set("${project.group}/order-service:${project.version}")
 }
 
 description = "order-app"

@@ -1,4 +1,5 @@
 import Dependencies.SPRING_BOOT_STARTER
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
     id("net.pilseong.food_ordering_system.kotlin-application-conventions")
@@ -18,6 +19,10 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClass.set("net.philipheur.food_ordering_system.restaurant_service.RestaurantServiceApplicationKt")
+}
+
+tasks.named<BootBuildImage>("bootBuildImage") {
+    imageName.set("${project.group}/restaurant-service:${project.version}")
 }
 
 description = "restaurant-app"

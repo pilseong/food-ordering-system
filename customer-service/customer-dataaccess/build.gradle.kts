@@ -9,8 +9,6 @@ plugins {
 }
 
 dependencies {
-    api(project(":saga"))
-    api(project(":outbox"))
     api(project(":customer-domain-application-service"))
     api(project(":common-dataaccess"))
 

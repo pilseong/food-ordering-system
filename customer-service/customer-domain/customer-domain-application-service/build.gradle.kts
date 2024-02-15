@@ -3,8 +3,6 @@ apply<LibraryConventionsPlugin>()
 
 dependencies {
     api(project(":common-utils"))
-    api(project(":saga"))
-    api(project(":outbox"))
     api(project(":customer-domain-core"))
 
     api(Dependencies.SPRING_BOOT_STARTER_VALIDATION)

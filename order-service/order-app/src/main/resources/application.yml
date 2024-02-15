@@ -23,7 +23,7 @@ spring:
 #      hibernate:
 #        dialect: org.hibernate.dialect.PostgreSQL9Dialect
   datasource:
-    url: jdbc:postgresql://192.168.50.141:5433/food-ordering-system?currentSchema=order&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
+    url: jdbc:postgresql://localhost:5432/food-ordering-system?currentSchema=order&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
     username: postgres
     password: qwe123
     driver-class-name: org.postgresql.Driver
@@ -35,9 +35,9 @@ spring:
       schema-locations: classpath:init-schema.sql
 
 kafka-config:
-  bootstrap-servers: 192.168.50.141:19092, 192.168.50.141:29092, 192.168.50.141:39092
+  bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
   schema-registry-url-key: schema.registry.url
-  schema-registry-url: http://192.168.50.141:8081
+  schema-registry-url: http://localhost:8081
   num-of-partitions: 3
   replication-factor: 3
 
