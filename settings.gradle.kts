@@ -11,6 +11,9 @@ plugins {
 }
 
 rootProject.name = "food-ordering-system"
+
+include(":app-config-data")
+
 include(":common-domain")
 include(":common-controller")
 include(":common-utils")
@@ -51,7 +54,8 @@ include(":saga")
 
 include(":outbox")
 
-
+project(":app-config-data").projectDir =
+    file("app-config-data")
 project(":common-domain").projectDir =
     file("common/common-domain")
 project(":common-controller").projectDir =

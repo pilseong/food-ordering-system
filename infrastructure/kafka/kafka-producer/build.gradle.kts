@@ -2,9 +2,10 @@
 apply<LibraryConventionsPlugin>()
 
 dependencies {
+    api(project(":common-utils"))
     api(project(":kafka-config-data"))
-    api("org.springframework.kafka:spring-kafka:3.1.1")
-    api("io.confluent:kafka-avro-serializer:7.5.1")
+    api(Dependencies.SPRING_KAFKA)
+    api(Dependencies.KAFKA_AVRO_SERIALIZER)
 }
 
 description = "kafka-producer"

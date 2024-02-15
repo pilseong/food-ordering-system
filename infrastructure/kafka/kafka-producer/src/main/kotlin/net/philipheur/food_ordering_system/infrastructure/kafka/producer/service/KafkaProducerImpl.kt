@@ -1,9 +1,9 @@
 package net.philipheur.food_ordering_system.infrastructure.kafka.producer.service
 
 import jakarta.annotation.PreDestroy
+import net.philipheur.food_ordering_system.common.utils.logging.LoggerDelegator
 import net.philipheur.food_ordering_system.infrastructure.kafka.producer.exception.KafkaProducerException
 import org.apache.avro.specific.SpecificRecordBase
-import org.slf4j.LoggerFactory
 import org.springframework.kafka.KafkaException
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.support.SendResult
@@ -11,14 +11,12 @@ import org.springframework.stereotype.Component
 import java.io.Serializable
 import java.util.function.BiConsumer
 
-inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
-
 @Component
 class KafkaProducerImpl<ID : Serializable, MSG : SpecificRecordBase>(
     private val kafkaTemplate: KafkaTemplate<ID, MSG>
 ) : KafkaProducer<ID, MSG> {
 
-    private val log = logger()
+    private val log by LoggerDelegator()
 
     override fun send(
         topicName: String,
