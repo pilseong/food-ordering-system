@@ -6,10 +6,10 @@ plugins {
 
 
 dependencies {
-    api(Dependencies.SPRING_AUTOCONFIGURE)
-    api(Dependencies.SPRING_CLOUD_CONFIG_SERVER)
-    api(Dependencies.SPRING_BOOT_STARTER_SECURITY)
-    api(project(":common-utils"))
+    implementation(Dependencies.SPRING_AUTOCONFIGURE)
+    implementation(Dependencies.SPRING_CLOUD_CONFIG_SERVER)
+    implementation(Dependencies.SPRING_BOOT_STARTER_SECURITY)
+    implementation(project(":common-utils"))
 }
 
 description = "config-server"

@@ -6,17 +6,17 @@ plugins {
 }
 
 dependencies {
-    api(project(":common-controller"))
-    api(project(":common-dataaccess"))
-    api(project(":customer-controller"))
-    api(project(":customer-dataaccess"))
-    api(project(":customer-domain-application-service"))
-    api(project(":customer-domain-core"))
-    api(project(":customer-messaging"))
-    api(project(":kafka-config-data"))
+    implementation(project(":common-controller"))
+    implementation(project(":common-dataaccess"))
+    implementation(project(":customer-controller"))
+    implementation(project(":customer-dataaccess"))
+    implementation(project(":customer-domain-application-service"))
+    implementation(project(":customer-domain-core"))
+    implementation(project(":customer-messaging"))
+    implementation(project(":kafka-config-data"))
 
-    api(Dependencies.SPRING_CLOUD_STARTER_CONFIG)
-    api(Dependencies.SPRING_BOOT_STARTER)
+    implementation(Dependencies.SPRING_CLOUD_STARTER_CONFIG)
+    implementation(Dependencies.SPRING_BOOT_STARTER)
 }
 
 application {

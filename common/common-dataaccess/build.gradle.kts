@@ -5,8 +5,8 @@ plugins {
 }
 
 dependencies {
-    api(Dependencies.SPRING_BOOT_STARTER_DATA_JPA)
-    api(Dependencies.POSTGRESQL)
+    implementation(Dependencies.SPRING_BOOT_STARTER_DATA_JPA)
+    implementation(Dependencies.POSTGRESQL)
 }
 
 description = "common-dataaccess"

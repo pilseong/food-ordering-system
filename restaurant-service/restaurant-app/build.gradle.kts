@@ -10,13 +10,13 @@ plugins {
 
 
 dependencies {
-    api(project(":restaurant-domain-application-service"))
-    api(project(":restaurant-domain-core"))
-    api(project(":restaurant-dataaccess"))
-    api(project(":restaurant-messaging"))
+    implementation(project(":restaurant-domain-application-service"))
+    implementation(project(":restaurant-domain-core"))
+    implementation(project(":restaurant-dataaccess"))
+    implementation(project(":restaurant-messaging"))
 
-    api(SPRING_CLOUD_STARTER_CONFIG)
-    api(SPRING_BOOT_STARTER)
+    implementation(SPRING_CLOUD_STARTER_CONFIG)
+    implementation(SPRING_BOOT_STARTER)
 }
 
 application {

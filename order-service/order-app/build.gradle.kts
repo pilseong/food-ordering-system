@@ -5,18 +5,18 @@ plugins {
     id("org.springframework.boot") version Versions.SPRING_BOOT
 }
 dependencies {
-    api(project(":common-controller"))
-    api(project(":common-dataaccess"))
-    api(project(":order-controller"))
-    api(project(":order-dataaccess"))
-    api(project(":order-domain-application-service"))
-    api(project(":order-domain-core"))
-    api(project(":order-messaging"))
-    api(project(":kafka-config-data"))
+    implementation(project(":common-controller"))
+    implementation(project(":common-dataaccess"))
+    implementation(project(":order-controller"))
+    implementation(project(":order-dataaccess"))
+    implementation(project(":order-domain-application-service"))
+    implementation(project(":order-domain-core"))
+    implementation(project(":order-messaging"))
+    implementation(project(":kafka-config-data"))
 
-    api(Dependencies.SPRING_CLOUD_STARTER_CONFIG)
-    api(Dependencies.SPRING_BOOT_STARTER_TEST)
-    api(Dependencies.SPRING_BOOT_STARTER)
+    implementation(Dependencies.SPRING_CLOUD_STARTER_CONFIG)
+    implementation(Dependencies.SPRING_BOOT_STARTER_TEST)
+    implementation(Dependencies.SPRING_BOOT_STARTER)
 }
 
 

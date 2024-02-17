@@ -47,7 +47,7 @@ class CommonConventionsPlugin : Plugin<Project> {
             implementation(Dependencies.COMMON_TEXT)
 
             implementation(Dependencies.JACKSON_MODULE_KOTLIN)
-            api(Dependencies.SPRING_BOOT_STARTER_LOGGING)
+            implementation(Dependencies.SPRING_BOOT_STARTER_LOGGING)
             runtimeOnly(Dependencies.KOTLIN_REFLECT)
 
             // Use JUnit Jupiter for testing.

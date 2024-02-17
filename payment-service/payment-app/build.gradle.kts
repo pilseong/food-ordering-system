@@ -7,13 +7,13 @@ plugins {
 
 
 dependencies {
-    api(project(":payment-domain-application-service"))
-    api(project(":payment-domain-core"))
-    api(project(":payment-dataaccess"))
-    api(project(":payment-messaging"))
+    implementation(project(":payment-domain-application-service"))
+    implementation(project(":payment-domain-core"))
+    implementation(project(":payment-dataaccess"))
+    implementation(project(":payment-messaging"))
 
-    api(Dependencies.SPRING_CLOUD_STARTER_CONFIG)
-    api(Dependencies.SPRING_BOOT_STARTER)
+    implementation(Dependencies.SPRING_CLOUD_STARTER_CONFIG)
+    implementation(Dependencies.SPRING_BOOT_STARTER)
 }
 
 application {
