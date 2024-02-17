@@ -14,6 +14,7 @@ dependencies {
     api(project(":order-messaging"))
     api(project(":kafka-config-data"))
 
+    api(Dependencies.SPRING_CLOUD_STARTER_CONFIG)
     api(Dependencies.SPRING_BOOT_STARTER_TEST)
     api(Dependencies.SPRING_BOOT_STARTER)
 }

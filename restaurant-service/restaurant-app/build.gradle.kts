@@ -1,4 +1,6 @@
+
 import Dependencies.SPRING_BOOT_STARTER
+import Dependencies.SPRING_CLOUD_STARTER_CONFIG
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
@@ -13,6 +15,7 @@ dependencies {
     api(project(":restaurant-dataaccess"))
     api(project(":restaurant-messaging"))
 
+    api(SPRING_CLOUD_STARTER_CONFIG)
     api(SPRING_BOOT_STARTER)
 }
 

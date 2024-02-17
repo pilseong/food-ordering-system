@@ -16,15 +16,16 @@
           </compositeBuild>
         </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="corretto-17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app-config-data" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/common/common-controller" />
             <option value="$PROJECT_DIR$/common/common-dataaccess" />
             <option value="$PROJECT_DIR$/common/common-domain" />
             <option value="$PROJECT_DIR$/common/common-utils" />
+            <option value="$PROJECT_DIR$/config-server" />
             <option value="$PROJECT_DIR$/customer-service/customer-app" />
             <option value="$PROJECT_DIR$/customer-service/customer-controller" />
             <option value="$PROJECT_DIR$/customer-service/customer-dataaccess" />

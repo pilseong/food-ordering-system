@@ -15,47 +15,47 @@ import java.io.Serializable
 
 
 @Configuration
-open class KafkaConsumerConfig<ID : Serializable, MSG : SpecificRecordBase>(
-    private val kafkaConfigData: KafkaConfigData,
-    private val kafkaConsumerConfigData: KafkaConsumerConfigData,
+open class KafkaConsumerConfig<KEY : Serializable, MSG : SpecificRecordBase>(
+    private val configData: KafkaConfigData,
+    private val consumerConfigData: KafkaConsumerConfigData,
 ) {
 
     @Bean
     open fun consumerConfigs(): Map<String, Any> {
         val props: Map<String, Any> =
             mapOf(
-                BOOTSTRAP_SERVERS_CONFIG to kafkaConfigData.bootstrapServers,
-                KEY_DESERIALIZER_CLASS_CONFIG to kafkaConsumerConfigData.keyDeserializer,
-                VALUE_DESERIALIZER_CLASS_CONFIG to kafkaConsumerConfigData.valueDeserializer,
-                AUTO_OFFSET_RESET_CONFIG to kafkaConsumerConfigData.autoOffsetReset,
-                kafkaConfigData.schemaRegistryUrlKey to kafkaConfigData.schemaRegistryUrl,
-                kafkaConsumerConfigData.specificAvroReaderKey to kafkaConsumerConfigData.specificAvroReader,
-                SESSION_TIMEOUT_MS_CONFIG to kafkaConsumerConfigData.sessionTimeoutMs,
-                HEARTBEAT_INTERVAL_MS_CONFIG to kafkaConsumerConfigData.heartbeatIntervalMs,
-                MAX_POLL_INTERVAL_MS_CONFIG to kafkaConsumerConfigData.maxPollIntervalMs,
+                BOOTSTRAP_SERVERS_CONFIG to configData.bootstrapServers,
+                KEY_DESERIALIZER_CLASS_CONFIG to consumerConfigData.keyDeserializer,
+                VALUE_DESERIALIZER_CLASS_CONFIG to consumerConfigData.valueDeserializer,
+                AUTO_OFFSET_RESET_CONFIG to consumerConfigData.autoOffsetReset,
+                configData.schemaRegistryUrlKey to configData.schemaRegistryUrl,
+                consumerConfigData.specificAvroReaderKey to consumerConfigData.specificAvroReader,
+                SESSION_TIMEOUT_MS_CONFIG to consumerConfigData.sessionTimeoutMs,
+                HEARTBEAT_INTERVAL_MS_CONFIG to consumerConfigData.heartbeatIntervalMs,
+                MAX_POLL_INTERVAL_MS_CONFIG to consumerConfigData.maxPollIntervalMs,
                 MAX_PARTITION_FETCH_BYTES_CONFIG to
-                        kafkaConsumerConfigData.maxPartitionFetchBytesDefault *
-                        kafkaConsumerConfigData.maxPartitionFetchBytesBoostFactor,
-                MAX_POLL_RECORDS_CONFIG to kafkaConsumerConfigData.maxPollRecords,
+                        consumerConfigData.maxPartitionFetchBytesDefault *
+                        consumerConfigData.maxPartitionFetchBytesBoostFactor,
+                MAX_POLL_RECORDS_CONFIG to consumerConfigData.maxPollRecords,
             )
         return props
     }
 
     @Bean
-    open fun consumerFactory(): ConsumerFactory<ID, MSG> {
+    open fun consumerFactory(): ConsumerFactory<KEY, MSG> {
         return DefaultKafkaConsumerFactory(consumerConfigs())
     }
 
     @Bean
     open fun kafkaListenerContainerFactory():
-            KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<ID, MSG>> {
+            KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<KEY, MSG>> {
 
-        val factory = ConcurrentKafkaListenerContainerFactory<ID, MSG>()
+        val factory = ConcurrentKafkaListenerContainerFactory<KEY, MSG>()
         factory.consumerFactory = consumerFactory()
-        factory.isBatchListener = kafkaConsumerConfigData.batchListener
-        factory.setConcurrency(kafkaConsumerConfigData.concurrencyLevel)
-        factory.setAutoStartup(kafkaConsumerConfigData.autoStartup)
-        factory.containerProperties.pollTimeout = kafkaConsumerConfigData.pollTimeoutMs
+        factory.isBatchListener = consumerConfigData.batchListener
+        factory.setConcurrency(consumerConfigData.concurrencyLevel)
+        factory.setAutoStartup(consumerConfigData.autoStartup)
+        factory.containerProperties.pollTimeout = consumerConfigData.pollTimeoutMs
         return factory
     }
 }

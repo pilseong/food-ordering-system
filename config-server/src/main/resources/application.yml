@@ -1,0 +1,25 @@
+server:
+  port: 8888
+
+logging:
+  level:
+    ROOT: info
+    org.spring.framework.cloud.config: DEBUG
+
+spring:
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/pilseong/config-server-repository
+          default-label: main
+          username: pilseong
+          password: '{cipher}e5c373ebff952cdd7545473ecd8b5b011d3bb423eb85fae2a806e1616fd14248eb556b60447a507b178c429ae7a2a491d5c68c4c0caaece54cdc67618cbd41f6'
+          clone-on-start: true
+        fail-fast: true
+  security:
+    user:
+      name: twitter-demo-cloud-server
+      password: '{cipher}209ca6f21bf4ae7eab499b02c4023618bc8a914e875772d7cd239ad3c16160c00f86caa7874cb7cc9f93c041a816344b'

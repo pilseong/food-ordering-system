@@ -1,13 +1,18 @@
 object Dependencies {
+    const val SPRING_BOOT_STARTER = "org.springframework.boot:spring-boot-starter:${Versions.SPRING_BOOT}"
     const val SPRING_BOOT_STARTER_LOGGING = "org.springframework.boot:spring-boot-starter-logging:${Versions.SPRING_BOOT}"
     const val SPRING_BOOT_STARTER_TEST = "org.springframework.boot:spring-boot-starter-test:${Versions.SPRING_BOOT}"
     const val SPRING_BOOT_STARTER_JSON = "org.springframework.boot:spring-boot-starter-json:${Versions.SPRING_BOOT}"
     const val SPRING_BOOT_STARTER_DATA_JPA = "org.springframework.boot:spring-boot-starter-data-jpa:${Versions.SPRING_BOOT}"
     const val SPRING_BOOT_STARTER_WEB = "org.springframework.boot:spring-boot-starter-web:${Versions.SPRING_BOOT}"
-    const val SPRING_BOOT_STARTER = "org.springframework.boot:spring-boot-starter:${Versions.SPRING_BOOT}"
+    const val SPRING_BOOT_STARTER_SECURITY = "org.springframework.boot:spring-boot-starter-security:${Versions.SPRING_BOOT}"
     const val SPRING_BOOT_STARTER_VALIDATION = "org.springframework.boot:spring-boot-starter-validation:${Versions.SPRING_BOOT}"
+    const val SPRING_AUTOCONFIGURE = "org.springframework.boot:spring-boot-autoconfigure:${Versions.SPRING_BOOT}"
+
     const val SPRING_TX = "org.springframework:spring-tx:${Versions.SPRING_TX}"
     const val SPRING_KAFKA = "org.springframework.kafka:spring-kafka:${Versions.SPRING_KAFKA}"
+    const val SPRING_CLOUD_CONFIG_SERVER = "org.springframework.cloud:spring-cloud-config-server:${Versions.SPRING_CLOUD}"
+    const val SPRING_CLOUD_STARTER_CONFIG = "org.springframework.cloud:spring-cloud-starter-config:${Versions.SPRING_CLOUD}"
 
     const val KOTLIN_REFLECT = "org.jetbrains.kotlin:kotlin-reflect:${Versions.KOTLIN}"
     const val JACKSON_MODULE_KOTLIN = "com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.JACKSON_KOTLIN}"

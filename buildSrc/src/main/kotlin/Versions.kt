@@ -10,4 +10,5 @@ object Versions {
     const val POSTGRESQL = "42.6.0"
     const val KAFKA_AVRO_SERIALIZER = "7.5.1"
     const val SPRING_KAFKA = "3.1.1"
+    const val SPRING_CLOUD = "4.1.0"
 }

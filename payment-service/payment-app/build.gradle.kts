@@ -12,6 +12,7 @@ dependencies {
     api(project(":payment-dataaccess"))
     api(project(":payment-messaging"))
 
+    api(Dependencies.SPRING_CLOUD_STARTER_CONFIG)
     api(Dependencies.SPRING_BOOT_STARTER)
 }
 

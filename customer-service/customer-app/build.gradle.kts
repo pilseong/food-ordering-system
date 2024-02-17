@@ -15,6 +15,7 @@ dependencies {
     api(project(":customer-messaging"))
     api(project(":kafka-config-data"))
 
+    api(Dependencies.SPRING_CLOUD_STARTER_CONFIG)
     api(Dependencies.SPRING_BOOT_STARTER)
 }
 
